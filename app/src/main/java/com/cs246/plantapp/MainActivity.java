@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
+//Quick change to see merge conflict
 public class MainActivity extends AppCompatActivity {
 
     @Override
