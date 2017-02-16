@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "825521017192",
+    "firebase_url": "https://plantsapp-1efcf.firebaseio.com",
+    "project_id": "plantsapp-1efcf",
+    "storage_bucket": "plantsapp-1efcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825521017192:android:1f2c859cdfe7f926",
+        "android_client_info": {
+          "package_name": "com.cs246.plantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825521017192-q0qif3c2qkefi554o5ma20qnujj3pea1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6D96So0M8mLhbKPPTs3KCRyzh9AvPNhM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825521017192-q0qif3c2qkefi554o5ma20qnujj3pea1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

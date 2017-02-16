@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_add_plant"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.cs246.plantapp.AddPlant"
+    tools:showIn="@layout/activity_add_plant">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="Sat."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView13"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/checkBox"
+            android:layout_alignStart="@+id/checkBox"
+            android:layout_alignEnd="@+id/checkBox"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText5"
+            android:layout_alignTop="@+id/textView4"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="48dp" />
+
+        <TextView
+            android:text="Fertilizer Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_alignBaseline="@+id/editText5"
+            android:layout_alignBottom="@+id/editText5"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Water Needed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_marginBottom="198dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:id="@+id/editText3"
+            android:layout_alignBaseline="@+id/textView3"
+            android:layout_alignBottom="@+id/textView3"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:text="Pot Diameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_marginBottom="27dp"
+            android:layout_above="@+id/editText4"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignBottom="@+id/editText"
+            android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_height="90dp"
+            android:cropToPadding="false"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:scaleType="fitCenter"
+            android:layout_width="90dp"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_marginTop="41dp"
+            android:layout_below="@+id/imageButton"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:text="Fri."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Sun."
+            android:textStyle="normal|bold"
+            android:layout_alignBaseline="@+id/textView13"
+            android:layout_alignBottom="@+id/textView13"
+            android:layout_alignStart="@+id/checkBox3"
+            android:layout_toStartOf="@+id/textView13"
+            android:textAlignment="center" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox3"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_alignBaseline="@+id/checkBox"
+            android:layout_alignBottom="@+id/checkBox"
+            android:layout_toStartOf="@+id/textView13" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox4"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_alignBaseline="@+id/checkBox3"
+            android:layout_alignBottom="@+id/checkBox3"
+            android:layout_toStartOf="@+id/Sun." />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox5"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_alignBaseline="@+id/checkBox4"
+            android:layout_alignBottom="@+id/checkBox4"
+            android:layout_toStartOf="@+id/textView8" />
+
+        <TextView
+            android:text="Wed."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView9"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/checkBox5"
+            android:layout_alignStart="@+id/checkBox5"
+            android:layout_toStartOf="@+id/textView8"
+            android:textAlignment="center" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox6"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_alignBaseline="@+id/checkBox5"
+            android:layout_alignBottom="@+id/checkBox5"
+            android:layout_toStartOf="@+id/textView9" />
+
+        <TextView
+            android:text="Tue."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView10"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/checkBox6"
+            android:layout_alignStart="@+id/checkBox6"
+            android:layout_toStartOf="@+id/textView9"
+            android:textAlignment="center" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox7"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_alignBaseline="@+id/checkBox6"
+            android:layout_alignBottom="@+id/checkBox6"
+            android:layout_toStartOf="@+id/textView10" />
+
+        <TextView
+            android:text="Mon."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/checkBox7"
+            android:layout_alignStart="@+id/checkBox7"
+            android:layout_toStartOf="@+id/textView10"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="Sun."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/checkBox8"
+            android:layout_alignStart="@+id/checkBox8"
+            android:layout_toStartOf="@+id/textView11"
+            android:textAlignment="center" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="26dp"
+            android:id="@+id/checkBox8"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/textView11" />
+
+        <TextView
+            android:text="Thu."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8"
+            android:textStyle="normal|bold"
+            android:layout_alignBaseline="@+id/Sun."
+            android:layout_alignBottom="@+id/Sun."
+            android:layout_alignStart="@+id/checkBox4"
+            android:layout_toStartOf="@+id/Sun."
+            android:textAlignment="center" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox"
+            android:contentDescription="Sn"
+            android:textDirection="firstStrongLtr"
+            android:translationY="-"
+            android:layout_marginStart="31dp"
+            android:layout_alignBaseline="@+id/checkBox8"
+            android:layout_alignBottom="@+id/checkBox8"
+            android:layout_toEndOf="@+id/imageButton" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText4"
+            android:layout_alignBaseline="@+id/textView4"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
