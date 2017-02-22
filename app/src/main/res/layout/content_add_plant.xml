@@ -128,7 +128,6 @@
             android:id="@+id/checkBox3"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_alignBaseline="@+id/checkBox"
             android:layout_alignBottom="@+id/checkBox"
             android:layout_toStartOf="@+id/textView13" />
@@ -139,7 +138,6 @@
             android:id="@+id/checkBox4"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_alignBaseline="@+id/checkBox3"
             android:layout_alignBottom="@+id/checkBox3"
             android:layout_toStartOf="@+id/Sun." />
@@ -150,7 +148,6 @@
             android:id="@+id/checkBox5"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_alignBaseline="@+id/checkBox4"
             android:layout_alignBottom="@+id/checkBox4"
             android:layout_toStartOf="@+id/textView8" />
@@ -172,7 +169,6 @@
             android:id="@+id/checkBox6"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_alignBaseline="@+id/checkBox5"
             android:layout_alignBottom="@+id/checkBox5"
             android:layout_toStartOf="@+id/textView9" />
@@ -194,7 +190,6 @@
             android:id="@+id/checkBox7"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_alignBaseline="@+id/checkBox6"
             android:layout_alignBottom="@+id/checkBox6"
             android:layout_toStartOf="@+id/textView10" />
@@ -228,7 +223,6 @@
             android:id="@+id/checkBox8"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_alignParentBottom="true"
             android:layout_toStartOf="@+id/textView11" />
 
@@ -250,7 +244,6 @@
             android:id="@+id/checkBox"
             android:contentDescription="Sn"
             android:textDirection="firstStrongLtr"
-            android:translationY="-"
             android:layout_marginStart="31dp"
             android:layout_alignBaseline="@+id/checkBox8"
             android:layout_alignBottom="@+id/checkBox8"
