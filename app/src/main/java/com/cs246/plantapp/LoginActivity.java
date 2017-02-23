@@ -190,11 +190,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private boolean isEmailValid(String email) {
+    public static boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
-    private boolean isPasswordValid(String password) {
+    public static boolean isPasswordValid(String password) {
         return password.length() > 4;
     }
 
