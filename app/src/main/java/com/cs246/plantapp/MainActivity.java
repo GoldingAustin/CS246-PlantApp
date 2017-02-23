@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         handleIntent(getIntent());
-
-
     }
 
     @Override
@@ -36,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
         }
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
