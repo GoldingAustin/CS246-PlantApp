@@ -6,4 +6,10 @@ package com.cs246.plantapp;
 
 public class PlantsObject {
 
+    public static boolean isNameValid(String name) {
+
+        return name.contains("@");
+
+    }
+
 }
