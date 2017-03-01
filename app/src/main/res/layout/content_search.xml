@@ -12,19 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ff141414">
-
-        <TextView
-            android:text="TextView"
+        <ListView android:id="@+id/listView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/search_text2" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/search_results"
-            style="@style/AppTheme"
-            android:cacheColorHint="@android:color/background_light" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:scrollbars="none" />
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

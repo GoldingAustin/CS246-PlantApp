@@ -7,3 +7,5 @@
 /build
 /captures
 .externalNativeBuild
+
+app/src/main/java/com/cs246/plantapp/.idea/workspace.xml

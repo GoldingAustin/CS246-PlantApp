@@ -13,14 +13,14 @@ public class DbBackend extends DbObject{
     public DbBackend(Context context) {
         super(context);
     }
-    public List<PlantsObject> searchDictionaryWords(String searchWord){
-        List<PlantsObject> mItems = new ArrayList<PlantsObject>();
-        String query = "Select * from dictionary where word like " + "'%" + searchWord + "%'";
-        Cursor cursor = this.getDbConnection().rawQuery(query, null); ArrayList<String> wordTerms = new ArrayList<String>(); if(cursor.moveToFirst()){
+    public ArrayList<PlantsObject> searchDictionaryWords(String searchWord){
+        ArrayList<PlantsObject> mItems = new ArrayList<>();
+        String query = "Select * from MyNewTable where Name like " + "'%" + searchWord + "%'";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        if(cursor.moveToFirst()){
             do{
-                int id = cursor.getInt(0);
-                String word = cursor.getString(cursor.getColumnIndexOrThrow("word"));
-                mItems.add(new PlantsObject()); }while(cursor.moveToNext());
+                mItems.add(new PlantsObject(cursor.getString(cursor.getColumnIndex("Name"))));
+            } while(cursor.moveToNext());
         }
         cursor.close();
         return mItems;

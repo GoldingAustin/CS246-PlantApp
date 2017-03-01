@@ -21,7 +21,7 @@ public class AddPlant extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ImageButton img = (ImageButton) findViewById(R.id.plant_image);
+        ImageButton img = (ImageButton) findViewById(R.id.imageButton);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +36,7 @@ public class AddPlant extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView img = (ImageView) findViewById(R.id.plant_image);
+            ImageView img = (ImageView) findViewById(R.id.imageButton);
             img.setImageBitmap(imageBitmap);
         }
     }

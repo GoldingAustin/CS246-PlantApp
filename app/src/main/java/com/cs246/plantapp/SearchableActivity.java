@@ -20,18 +20,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by austingolding on 2/2/17.
  */
 public class SearchableActivity extends AppCompatActivity {
 
-    private FirebaseDatabase database;
+    private ListView listView;
+    private DbBackend databaseObject;
+    PlantsAdapter plantsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        databaseObject = new DbBackend(SearchableActivity.this);
         handleIntent(getIntent());
     }
 
@@ -56,19 +60,16 @@ public class SearchableActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            findSearch(query);
             Log.d("test", query);
+            findSearch(query);
+
         }
     }
 
     protected void findSearch(String query) {
-        database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference();
-        ListView view = (ListView) findViewById(R.id.search_results);
-        ArrayList<String> databaseData = new ArrayList<>();
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.content_search, R.id.search_text2, databaseData);
-        Query qr = ref.orderByChild(query);
-        adapter.add(qr.toString());
-        view.setAdapter(adapter);
+        ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
+        plantsAdapter = new PlantsAdapter(SearchableActivity.this, dictionaryObject);
+        ListView view = (ListView) findViewById(R.id.listView);
+        view.setAdapter(plantsAdapter);
     }
 }
