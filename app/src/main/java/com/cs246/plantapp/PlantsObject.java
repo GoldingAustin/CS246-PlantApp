@@ -1,7 +1,5 @@
 package com.cs246.plantapp;
 
-import android.widget.BaseAdapter;
-
 /**
  * Created by austingolding on 2/20/17.
  */
