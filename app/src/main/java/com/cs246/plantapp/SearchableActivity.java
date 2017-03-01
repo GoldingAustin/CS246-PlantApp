@@ -68,7 +68,7 @@ public class SearchableActivity extends AppCompatActivity {
 
     protected void findSearch(String query) {
         ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
-        plantsAdapter = new PlantsAdapter(SearchableActivity.this, dictionaryObject);
+        plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
         ListView view = (ListView) findViewById(R.id.listView);
         view.setAdapter(plantsAdapter);
     }

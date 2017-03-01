@@ -18,12 +18,6 @@ public class PlantsObject {
 
     public PlantsObject(String name) {
         this.name = name;
-        this.soilPH = soilPH;
-        this.category = category;
-        this.spacing = spacing;
-        this.sunExpo = sunExpo;
-        this.waterReq = waterReq;
-        this.image = image;
     }
 
     private String name;

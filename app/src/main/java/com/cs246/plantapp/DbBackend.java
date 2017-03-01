@@ -6,6 +6,8 @@ package com.cs246.plantapp;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class DbBackend extends DbObject{
             } while(cursor.moveToNext());
         }
         cursor.close();
+        Log.d("Plants", mItems.get(0).getName());
         return mItems;
     }
 }
