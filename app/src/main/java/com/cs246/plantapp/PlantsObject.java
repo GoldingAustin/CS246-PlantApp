@@ -5,6 +5,9 @@ package com.cs246.plantapp;
  */
 
 public class PlantsObject {
+    public static boolean isNameValid(String name) {
+        return name.contains("@");
+    }
 
     public PlantsObject(String name, String soilPH, String category, String spacing, String sunExpo, String waterReq, String image) {
         this.name = name;
@@ -27,7 +30,6 @@ public class PlantsObject {
     private String sunExpo;
     private String waterReq;
     private String image;
-
 
 
     public String getName() {

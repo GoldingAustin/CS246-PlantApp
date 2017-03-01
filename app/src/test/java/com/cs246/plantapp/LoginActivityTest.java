@@ -2,10 +2,10 @@ package com.cs246.plantapp;
 
 import org.junit.Test;
 
-import static com.cs246.plantapp.LoginActivity.*;
+import static com.cs246.plantapp.LoginActivity.isEmailValid;
 import static com.cs246.plantapp.LoginActivity.isPasswordValid;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by austingolding on 2/22/17.
