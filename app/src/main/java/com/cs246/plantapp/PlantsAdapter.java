@@ -4,27 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.cs246.plantapp.PlantsObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by austingolding on 2/22/17.
  */
 
-public class PlantsAdapter extends BaseAdapter {
+public class PlantsAdapter extends ArrayAdapter<PlantsObject> {
     private Context c;
     private ArrayList<PlantsObject> plants;
-    private LayoutInflater inflater;
 
     public PlantsAdapter(Context c, ArrayList<PlantsObject> plants) {
+        super(c, 0, plants);
         this.c = c;
-        inflater = (LayoutInflater)c.getSystemService(c.LAYOUT_INFLATER_SERVICE);
         this.plants = plants;
     }
 
@@ -34,7 +29,7 @@ public class PlantsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public PlantsObject getItem(int position) {
         return plants.get(position);
     }
 
@@ -45,22 +40,13 @@ public class PlantsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder listViewHolder = new ViewHolder();
-        if(convertView==null)
-        {
-            convertView=inflater.inflate(R.layout.content_search,parent,false);
-            listViewHolder.plantNames = (TextView)convertView.findViewById(R.id.list_items_search);
-            convertView.setTag(listViewHolder);
+        PlantsObject plantsObject = getItem(position);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_items, parent, false);
         }
-        else {
-            listViewHolder = (ViewHolder)convertView.getTag();
-        }
-        listViewHolder.plantNames.setText(this.plants.get(position).getName());
+        TextView name = (TextView) convertView.findViewById(R.id.list_items_search);
+        name.setText(plantsObject.getName());
 
         return convertView;
-    }
-
-    static class ViewHolder {
-        TextView plantNames;
     }
 }

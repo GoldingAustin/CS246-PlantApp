@@ -1,26 +1,17 @@
 package com.cs246.plantapp;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.support.v7.widget.SearchView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by austingolding on 2/2/17.
@@ -44,7 +35,7 @@ public class SearchableActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         SearchManager searchManager =
-                (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
@@ -68,7 +59,7 @@ public class SearchableActivity extends AppCompatActivity {
 
     protected void findSearch(String query) {
         ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
-        plantsAdapter = new PlantsAdapter(SearchableActivity.this, dictionaryObject);
+        plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
         ListView view = (ListView) findViewById(R.id.listView);
         view.setAdapter(plantsAdapter);
     }

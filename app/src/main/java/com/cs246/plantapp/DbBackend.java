@@ -6,23 +6,26 @@ package com.cs246.plantapp;
 
 import android.content.Context;
 import android.database.Cursor;
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
-public class DbBackend extends DbObject{
+import java.util.ArrayList;
+
+public class DbBackend extends DbObject {
     public DbBackend(Context context) {
         super(context);
     }
-    public ArrayList<PlantsObject> searchDictionaryWords(String searchWord){
+
+    public ArrayList<PlantsObject> searchDictionaryWords(String searchWord) {
         ArrayList<PlantsObject> mItems = new ArrayList<>();
         String query = "Select * from MyNewTable where Name like " + "'%" + searchWord + "%'";
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 mItems.add(new PlantsObject(cursor.getString(cursor.getColumnIndex("Name"))));
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
+        Log.d("Plants", mItems.get(0).getName());
         return mItems;
     }
 }
