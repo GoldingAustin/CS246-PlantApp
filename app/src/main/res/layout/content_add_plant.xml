@@ -33,52 +33,12 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText5"
-            android:layout_alignTop="@+id/textView4"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="48dp" />
-
-        <TextView
-            android:text="Fertilizer Amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView5"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_alignBaseline="@+id/editText5"
-            android:layout_alignBottom="@+id/editText5"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:text="Water Needed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_marginBottom="198dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:ems="10"
             android:id="@+id/editText3"
             android:layout_alignBaseline="@+id/textView3"
             android:layout_alignBottom="@+id/textView3"
             android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:text="Pot Diameter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_marginBottom="27dp"
-            android:layout_above="@+id/editText4"
-            android:layout_alignParentStart="true" />
 
         <TextView
             android:text="Name"
@@ -88,17 +48,6 @@
             android:layout_alignBaseline="@+id/editText"
             android:layout_alignBottom="@+id/editText"
             android:layout_alignParentStart="true" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_height="90dp"
-            android:cropToPadding="false"
-            app:srcCompat="@android:drawable/ic_menu_camera"
-            android:scaleType="fitCenter"
-            android:layout_width="90dp"
-            android:background="@android:color/transparent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -258,6 +207,54 @@
             android:layout_alignBaseline="@+id/textView4"
             android:layout_alignBottom="@+id/textView4"
             android:layout_alignParentEnd="true" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_height="90dp"
+            android:cropToPadding="false"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:scaleType="fitCenter"
+            android:layout_width="90dp"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Water Needed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_below="@+id/editText3"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText5"
+            android:layout_alignBaseline="@+id/textView5"
+            android:layout_alignBottom="@+id/textView5"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:text="Pot Diameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_below="@+id/editText"
+            android:layout_alignStart="@+id/textView5" />
+
+        <TextView
+            android:text="Fertilizer Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_below="@+id/editText4"
+            android:layout_toStartOf="@+id/editText4" />
 
     </RelativeLayout>
 
