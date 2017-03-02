@@ -19,12 +19,43 @@ public class PlantsObject {
         this.image = image;
     }
 
+    public PlantsObject() {}
+
     public PlantsObject(String name) {
         this.name = name;
     }
 
     private String name;
     private String soilPH;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSoilPH(String soilPH) {
+        this.soilPH = soilPH;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setSpacing(String spacing) {
+        this.spacing = spacing;
+    }
+
+    public void setSunExpo(String sunExpo) {
+        this.sunExpo = sunExpo;
+    }
+
+    public void setWaterReq(String waterReq) {
+        this.waterReq = waterReq;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     private String category;
     private String spacing;
     private String sunExpo;
