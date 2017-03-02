@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AddPlant.class);
                 startActivity(i);
-                setContentView(R.layout.activity_add_plant);
+                //setContentView(R.layout.activity_add_plant);
 
             }
         });
