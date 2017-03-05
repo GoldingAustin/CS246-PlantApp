@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(i);
+
         }
 
         if (id == R.id.action_logout) {

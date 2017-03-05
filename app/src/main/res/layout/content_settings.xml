@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dayPrefLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Days You Are Open to Water"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayoutAddLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp">
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+        <CheckBox
+            android:id="@+id/checkBox5"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+        <CheckBox
+            android:id="@+id/checkBox6"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+        <CheckBox
+            android:id="@+id/checkBox7"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+        <CheckBox
+            android:id="@+id/SatCheck"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textDirection="firstStrongLtr" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAddLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_below="@+id/dayPrefLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp">
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Mon."
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Tue."
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/Wed."
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Wed."
+            android:textAlignment="center"
+
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Thu."
+            android:textAlignment="center"
+
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/Fri."
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Fri."
+            android:textAlignment="center"
+
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/Sat."
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Sat."
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="Sun."
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>
