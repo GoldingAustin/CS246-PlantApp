@@ -48,154 +48,128 @@
             android:layout_below="@+id/imageButton"
             android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:text="Fri."
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Fri."
-            android:textStyle="normal|bold"
-            android:layout_alignBaseline="@+id/Sat."
-            android:layout_alignBottom="@+id/Sat."
-            android:layout_alignStart="@+id/checkBox3"
-            android:layout_toStartOf="@+id/Sat."
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/Sat."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/checkBox"
-            android:layout_alignEnd="@+id/checkBox"
-            android:layout_alignStart="@+id/checkBox"
-            android:text="Sat."
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox3"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
-            android:layout_alignBaseline="@+id/checkBox"
-            android:layout_alignBottom="@+id/checkBox"
-            android:layout_toStartOf="@+id/Sat." />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox4"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
-            android:layout_alignBaseline="@+id/checkBox3"
-            android:layout_alignBottom="@+id/checkBox3"
-            android:layout_toStartOf="@+id/Fri." />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox5"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
-            android:layout_alignBaseline="@+id/checkBox4"
-            android:layout_alignBottom="@+id/checkBox4"
-            android:layout_toStartOf="@+id/textView8" />
-
-        <TextView
-            android:text="Wed."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Wed."
-            android:textStyle="normal|bold"
-            android:layout_above="@+id/checkBox5"
-            android:layout_alignStart="@+id/checkBox5"
-            android:layout_toStartOf="@+id/textView8"
-            android:textAlignment="center" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox6"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
-            android:layout_alignBaseline="@+id/checkBox5"
-            android:layout_alignBottom="@+id/checkBox5"
-            android:layout_toStartOf="@+id/Wed." />
-
-        <TextView
-            android:text="Tue."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView10"
-            android:textStyle="normal|bold"
-            android:layout_above="@+id/checkBox6"
-            android:layout_alignStart="@+id/checkBox6"
-            android:layout_toStartOf="@+id/Wed."
-            android:textAlignment="center" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox7"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
-            android:layout_alignBaseline="@+id/checkBox6"
-            android:layout_alignBottom="@+id/checkBox6"
-            android:layout_toStartOf="@+id/textView10" />
-
-        <TextView
-            android:text="Sun."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView12"
-            android:textStyle="normal|bold"
-            android:layout_above="@+id/checkBox8"
-            android:layout_alignStart="@+id/checkBox8"
-            android:layout_toStartOf="@+id/textView11"
-            android:textAlignment="center" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
-            android:id="@+id/checkBox8"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/textView11" />
+            android:layout_marginBottom="134dp"
+            android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="Thu."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView8"
-            android:textStyle="normal|bold"
-            android:layout_alignBaseline="@+id/Fri."
-            android:layout_alignBottom="@+id/Fri."
-            android:layout_alignStart="@+id/checkBox4"
-            android:layout_toStartOf="@+id/Fri."
-            android:textAlignment="center" />
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
-            android:contentDescription="Sn"
-            android:textDirection="firstStrongLtr"
-            android:layout_marginStart="31dp"
-            android:layout_alignBaseline="@+id/checkBox8"
-            android:layout_alignBottom="@+id/checkBox8"
-            android:layout_toEndOf="@+id/imageButton" />
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/checkBox5"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
+
+            <CheckBox
+                android:id="@+id/checkBox6"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
+
+            <CheckBox
+                android:id="@+id/checkBox7"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
+
+            <CheckBox
+                android:id="@+id/SatCheck"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAddLabel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/checkBox6"
-            android:layout_alignStart="@+id/checkBox7"
-            android:text="Mon."
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
+            android:layout_above="@+id/linearLayout"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Mon."
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Tue."
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/Wed."
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Wed."
+                android:textAlignment="center"
+
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Thu."
+                android:textAlignment="center"
+
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/Fri."
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Fri."
+                android:textAlignment="center"
+
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/Sat."
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Sat."
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="Sun."
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
 
         <EditText
             android:layout_width="wrap_content"
