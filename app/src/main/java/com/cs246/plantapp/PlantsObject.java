@@ -91,5 +91,16 @@ public class PlantsObject {
         return image;
     }
 
-
+    @Override
+    public String toString() {
+        return "PlantsObject{" +
+                "name='" + name + '\'' +
+                ", soilPH='" + soilPH + '\'' +
+                ", category='" + category + '\'' +
+                ", spacing='" + spacing + '\'' +
+                ", sunExpo='" + sunExpo + '\'' +
+                ", waterReq='" + waterReq + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

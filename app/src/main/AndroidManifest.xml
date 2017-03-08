@@ -20,9 +20,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
 
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SearchableActivity" />
+
         </activity>
         <activity
             android:name=".SearchableActivity"
@@ -41,7 +39,11 @@
         <activity
             android:name=".AddPlant"
             android:label="@string/title_activity_add_plant"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+            </activity>
         <activity
             android:name=".CreateAccount"
             android:label="@string/title_activity_create_account"
