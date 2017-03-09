@@ -6,10 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -26,6 +32,15 @@ public class SearchableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ListView view = (ListView) findViewById(R.id.listView);
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
+                Log.d("Selected Plant: ", plant.toString());
+            }
+        });
         databaseObject = new DbBackend(SearchableActivity.this);
         handleIntent(getIntent());
     }
@@ -33,7 +48,7 @@ public class SearchableActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_search, menu);
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
@@ -44,6 +59,30 @@ public class SearchableActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(i);
+
+        }
+
+        if (id == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(i);
+            setContentView(R.layout.activity_login);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
@@ -51,7 +90,7 @@ public class SearchableActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.d("test", query);
+            Log.d("Search", query);
             findSearch(query);
 
         }
@@ -60,6 +99,7 @@ public class SearchableActivity extends AppCompatActivity {
     protected void findSearch(String query) {
         ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
         plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
+        Log.d("Results", String.valueOf(plantsAdapter.getCount()));
         ListView view = (ListView) findViewById(R.id.listView);
         view.setAdapter(plantsAdapter);
     }
