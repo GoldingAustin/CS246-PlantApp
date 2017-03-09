@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.io.ByteArrayOutputStream;
 
 public class AddPlant extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String TAG = "AddPlant";
     private Bitmap bitmapPlant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class AddPlant extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v(TAG, "ImageButton: clicked");
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 
@@ -138,17 +141,21 @@ public class AddPlant extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            Log.v(TAG, ": Settings Selected");
             Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(i);
 
         }
 
         if (id == R.id.action_logout) {
+            Log.v(TAG, ": Beginning Logout");
             FirebaseAuth.getInstance().signOut();
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
             setContentView(R.layout.activity_login);
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
