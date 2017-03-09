@@ -1,5 +1,6 @@
 package com.cs246.plantapp;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,8 +9,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,12 +23,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 
 public class AddPlant extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String TAG = "AddPlant";
     private Bitmap bitmapPlant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,7 @@ public class AddPlant extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v(TAG, "ImageButton: clicked");
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 
@@ -114,6 +122,42 @@ public class AddPlant extends AppCompatActivity {
             ImageView img = (ImageView) findViewById(R.id.imageButton);
             img.setImageBitmap(imageBitmap);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Log.v(TAG, ": Settings Selected");
+            Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(i);
+
+        }
+
+        if (id == R.id.action_logout) {
+            Log.v(TAG, ": Beginning Logout");
+            FirebaseAuth.getInstance().signOut();
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(i);
+            setContentView(R.layout.activity_login);
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
