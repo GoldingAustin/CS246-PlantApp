@@ -20,33 +20,37 @@
         android:layout_alignParentStart="true">
 
         <EditText
+            android:id="@+id/editPotDiameter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
+            android:layout_above="@+id/textView4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp"
             android:ems="10"
-            android:id="@+id/editPotDiameter"
-            android:layout_alignBaseline="@+id/textView3"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignParentEnd="true" />
+            android:inputType="text" />
 
         <TextView
-            android:text="Name"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Name"
+            android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_alignBaseline="@+id/editName"
+            android:layout_marginBottom="42dp"
             android:layout_alignBottom="@+id/editName"
-            android:layout_alignParentStart="true" />
+            android:layout_centerHorizontal="true" />
 
         <EditText
+            android:id="@+id/editName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_above="@+id/textView3"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
             android:ems="10"
-            android:id="@+id/editName"
-            android:layout_marginTop="41dp"
-            android:layout_below="@+id/imageButton"
-            android:layout_alignParentEnd="true" />
+            android:inputType="text|textPersonName" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -54,8 +58,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
+            android:layout_marginBottom="47dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="134dp"
             android:layout_alignParentStart="true">
 
             <CheckBox
@@ -172,62 +176,68 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/editWater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_above="@+id/textView5"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11dp"
             android:ems="10"
-            android:id="@+id/editWater"
-            android:layout_alignBaseline="@+id/textView4"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_alignParentEnd="true" />
+            android:inputType="text" />
 
         <ImageButton
             android:id="@+id/imageButton"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:cropToPadding="false"
-            app:srcCompat="@android:drawable/ic_menu_camera"
-            android:scaleType="fitCenter"
-            android:layout_width="90dp"
-            android:background="@android:color/transparent"
+            android:layout_above="@+id/editName"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="30dp"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Water Needed"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_above="@+id/editWater"
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:text="Water Needed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_below="@+id/editPotDiameter"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:text="Pot Diameter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/textView3"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_below="@+id/editName"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:text="Fertilizer Amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5"
+            android:text="Pot Diameter"
+            android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_below="@+id/editWater"
-            android:layout_alignParentStart="true" />
+            android:layout_above="@+id/editPotDiameter"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fertilizer Amount"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_above="@+id/editFertalizer"
+            android:layout_centerHorizontal="true" />
 
         <EditText
+            android:id="@+id/editFertalizer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:layout_above="@+id/linearLayoutAddLabel"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:ems="10"
-            android:id="@+id/editFertalizer"
-            android:layout_alignBaseline="@+id/textView5"
-            android:layout_alignBottom="@+id/textView5"
-            android:layout_alignParentEnd="true" />
+            android:inputType="text" />
 
     </RelativeLayout>
 

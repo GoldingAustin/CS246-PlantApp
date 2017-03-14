@@ -9,9 +9,11 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by simpl on 2/23/2017.
  */
-
 public class PlantNameTest {
 
+    /**
+     * Is name valid returns true.
+     */
     @Test
     public void isNameValid_returnsTrue() {
 
@@ -19,6 +21,9 @@ public class PlantNameTest {
 
     }
 
+    /**
+     * Is name valid returns false.
+     */
     @Test
     public void isNameValid_returnsFalse() {
 

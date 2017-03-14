@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * The type Create account.
+ */
 public class CreateAccount extends AppCompatActivity {
 
     @Override

@@ -10,11 +10,25 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+/**
+ * The type Db backend.
+ */
 public class DbBackend extends DbObject {
+    /**
+     * Instantiates a new Db backend.
+     *
+     * @param context the context
+     */
     public DbBackend(Context context) {
         super(context);
     }
 
+    /**
+     * Search dictionary words array list.
+     *
+     * @param searchWord the search word
+     * @return the array list
+     */
     public ArrayList<PlantsObject> searchDictionaryWords(String searchWord) {
         ArrayList<PlantsObject> mItems = new ArrayList<>();
         String query = "Select * from MyNewTable where Name like " + "'%" + searchWord + "%'";

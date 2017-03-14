@@ -37,7 +37,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Add plant.
+ */
 public class AddPlant extends AppCompatActivity {
+    /**
+     * The Request image capture.
+     */
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String TAG = "AddPlant";
     private Bitmap bitmapPlant;
@@ -110,6 +116,12 @@ public class AddPlant extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets bitmap from url.
+     *
+     * @param src the src
+     * @return the bitmap from url
+     */
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
@@ -126,7 +138,13 @@ public class AddPlant extends AppCompatActivity {
     }
 
 
-    /* BitMapToString and StringToBitMap
+    /**
+     * Bit map to string string.
+     *
+     * @param bitmap the bitmap
+     * @return the string
+     */
+/* BitMapToString and StringToBitMap
      * http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
      */
     public String BitMapToString(Bitmap bitmap) {
@@ -137,6 +155,12 @@ public class AddPlant extends AppCompatActivity {
         return temp;
     }
 
+    /**
+     * String to bit map bitmap.
+     *
+     * @param encodedString the encoded string
+     * @return the bitmap
+     */
     public Bitmap StringToBitMap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
@@ -149,7 +173,11 @@ public class AddPlant extends AppCompatActivity {
         }
     }
 
-    //Fills in values for addPlant Activity
+    /**
+     * Replace add plant values.
+     *
+     * @param plantsObject the plants object
+     */
     public void ReplaceAddPlantValues(PlantsObject plantsObject) {
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
@@ -168,7 +196,11 @@ public class AddPlant extends AppCompatActivity {
         }
     }
 
-    //Creates a new plant objects and returns it
+    /**
+     * Sets plant object.
+     *
+     * @return the plant object
+     */
     public PlantsObject setPlantObject() {
         PlantsObject tempPlant = new PlantsObject();
         EditText name = (EditText) findViewById(R.id.editName);
@@ -196,7 +228,9 @@ public class AddPlant extends AppCompatActivity {
         return tempPlant;
     }
 
-    //Adds users plant to their firebase database
+    /**
+     * Sets plant firebase.
+     */
     public void setPlantFireBase() {
         SharedPreferences prefs = this.getSharedPreferences("Login", Context.MODE_PRIVATE);
         String user = prefs.getString("User", "");

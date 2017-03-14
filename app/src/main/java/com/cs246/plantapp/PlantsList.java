@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * The type Plants list.
+ */
 public class PlantsList extends AppCompatActivity {
 
     @Override
