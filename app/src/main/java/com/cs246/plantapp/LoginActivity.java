@@ -223,14 +223,33 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+    /**
+     * Is email valid boolean.
+     *
+     * @param email the email
+     * @return the boolean
+     */
     public static boolean isEmailValid(String email) {
         return email.contains("@") && (email.contains(".com") || email.contains(".edu") || email.contains(".org") || email.contains(".net"));
     }
 
+    /**
+     * Is password valid boolean.
+     *
+     * @param password the password
+     * @return the boolean
+     */
     public static boolean isPasswordValid(String password) {
         return password.length() > 5;
     }
 
+    /**
+     * Is email and pass valid boolean.
+     *
+     * @param email    the email
+     * @param password the password
+     * @return the boolean
+     */
     public boolean isEmailAndPassValid(String email, String password) {
         final boolean[] valid = {false};
         mAuth.signInWithEmailAndPassword(email, password)
@@ -323,6 +342,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         private final String mEmail;
         private final String mPassword;
 
+        /**
+         * Instantiates a new User login task.
+         *
+         * @param email    the email
+         * @param password the password
+         */
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;

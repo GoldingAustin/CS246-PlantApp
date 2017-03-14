@@ -12,11 +12,16 @@ import java.util.ArrayList;
 /**
  * Created by austingolding on 2/22/17.
  */
-
 public class PlantsAdapter extends ArrayAdapter<PlantsObject> {
     private Context c;
     private ArrayList<PlantsObject> plants;
 
+    /**
+     * Instantiates a new Plants adapter.
+     *
+     * @param c      the c
+     * @param plants the plants
+     */
     public PlantsAdapter(Context c, ArrayList<PlantsObject> plants) {
         super(c, 0, plants);
         this.c = c;

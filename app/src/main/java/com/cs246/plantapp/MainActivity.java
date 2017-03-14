@@ -14,6 +14,9 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * The type Main activity.
+ */
 //Quick change to see merge conflict
 public class MainActivity extends AppCompatActivity {
 

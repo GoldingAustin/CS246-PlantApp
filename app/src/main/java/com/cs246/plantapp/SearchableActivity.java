@@ -28,6 +28,9 @@ public class SearchableActivity extends AppCompatActivity {
 
     private ListView listView;
     private DbBackend databaseObject;
+    /**
+     * The Plants adapter.
+     */
     PlantsAdapter plantsAdapter;
 
     @Override
@@ -85,6 +88,14 @@ public class SearchableActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * On item click.
+     *
+     * @param parent   the parent
+     * @param v        the v
+     * @param position the position
+     * @param id       the id
+     */
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
     }
@@ -103,6 +114,11 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Find search.
+     *
+     * @param query the query
+     */
     protected void findSearch(String query) {
         ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
         plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
