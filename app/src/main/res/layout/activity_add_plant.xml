@@ -24,17 +24,17 @@
     <include layout="@layout/content_add_plant" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/savePlantButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        android:id="@+id/floatingActionButton"
-        app:layout_anchorGravity="bottom|right"
         android:layout_gravity="bottom|right"
-        app:elevation="7dp"
         android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp"
+        android:clickable="true"
+        app:elevation="7dp"
+        app:fabSize="mini"
+        app:layout_anchorGravity="bottom|right"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
 
 </android.support.design.widget.CoordinatorLayout>

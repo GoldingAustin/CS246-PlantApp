@@ -3,7 +3,9 @@ package com.cs246.plantapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,6 +82,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    SharedPreferences prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("User", user.getUid());
+                    editor.commit();
                     startActivity(i);
                     setContentView(R.layout.activity_main);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());

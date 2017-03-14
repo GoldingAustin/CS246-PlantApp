@@ -3,6 +3,7 @@ package com.cs246.plantapp;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -38,6 +40,11 @@ public class SearchableActivity extends AppCompatActivity {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
+                Intent i = new Intent(getApplicationContext(), AddPlant.class);
+                Gson gson = new Gson();
+                String json = gson.toJson(plant);
+                i.putExtra("searchPlant", json);
+                startActivity(i);
                 Log.d("Selected Plant: ", plant.toString());
             }
         });
