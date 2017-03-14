@@ -1,5 +1,7 @@
 package com.cs246.plantapp;
 
+import java.util.List;
+
 /**
  * Created by austingolding on 2/20/17.
  */
@@ -24,9 +26,6 @@ public class PlantsObject {
     public PlantsObject(String name) {
         this.name = name;
     }
-
-    private String name;
-    private String soilPH;
 
     public void setName(String name) {
         this.name = name;
@@ -56,12 +55,22 @@ public class PlantsObject {
         this.image = image;
     }
 
+    private String name;
+    private String soilPH;
     private String category;
     private String spacing;
     private String sunExpo;
     private String waterReq;
     private String image;
+    private List<Boolean> checkDays;
 
+    public List<Boolean> getCheckDays() {
+        return checkDays;
+    }
+
+    public void setCheckDays(List<Boolean> checkDays) {
+        this.checkDays = checkDays;
+    }
 
     public String getName() {
         return name;
@@ -101,6 +110,7 @@ public class PlantsObject {
                 ", sunExpo='" + sunExpo + '\'' +
                 ", waterReq='" + waterReq + '\'' +
                 ", image='" + image + '\'' +
+                ", checkDays=" + checkDays +
                 '}';
     }
 }
