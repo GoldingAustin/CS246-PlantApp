@@ -1,5 +1,6 @@
 package com.cs246.plantapp;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 /**
@@ -37,6 +38,16 @@ public class PlantsObject {
         this.image = image;
     }
 
+    public PlantsObject(String name, String soilPH, String category, String spacing, String sunExpo, String waterReq, ByteArrayOutputStream compressed) {
+        this.name = name;
+        this.soilPH = soilPH;
+        this.category = category;
+        this.spacing = spacing;
+        this.sunExpo = sunExpo;
+        this.waterReq = waterReq;
+        this.compressed = compressed;
+    }
+
     /**
      * Instantiates a new Plants object.
      */
@@ -49,6 +60,14 @@ public class PlantsObject {
      */
     public PlantsObject(String name) {
         this.name = name;
+    }
+
+    public ByteArrayOutputStream getCompressed() {
+        return compressed;
+    }
+
+    public void setCompressed(ByteArrayOutputStream compressed) {
+        this.compressed = compressed;
     }
 
     /**
@@ -121,6 +140,7 @@ public class PlantsObject {
     private String sunExpo;
     private String waterReq;
     private String image;
+    private ByteArrayOutputStream compressed;
     private List<Boolean> checkDays;
 
     /**

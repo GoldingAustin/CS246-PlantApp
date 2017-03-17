@@ -34,8 +34,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.cs246.plantapp.Utilities.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cs246.plantapp.Utilities.BitMapToString;
+import static com.cs246.plantapp.Utilities.StringToBitMap;
 
 /**
  * The type Add plant.
@@ -62,10 +66,9 @@ public class AddPlant extends AppCompatActivity {
             String json = i.getStringExtra("searchPlant");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
 
-            if (!plantsObject.getImage().isEmpty()) {
+            if (plantsObject.getImage() != null) {
                 GetBitmapFromURLAsync getBitmapFromURLAsync = new GetBitmapFromURLAsync();
                 getBitmapFromURLAsync.execute(plantsObject.getImage());
-
             }
             ReplaceAddPlantValues(plantsObject);
         } else if (prefs.contains("tempPlant")) {
@@ -100,9 +103,9 @@ public class AddPlant extends AppCompatActivity {
     }
 
     /* GetBitmapFromURLAsync and getBitmapFromURL
-        *http://stackoverflow.com/questions/37510411/download-an-image-into-bitmap-file-in-android
-        */
-    private class GetBitmapFromURLAsync extends AsyncTask<String, Void, Bitmap> {
+    *http://stackoverflow.com/questions/37510411/download-an-image-into-bitmap-file-in-android
+    */
+    public class GetBitmapFromURLAsync extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... params) {
             return getBitmapFromURL(params[0]);
@@ -122,7 +125,7 @@ public class AddPlant extends AppCompatActivity {
      * @param src the src
      * @return the bitmap from url
      */
-    public static Bitmap getBitmapFromURL(String src) {
+    public Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -133,42 +136,6 @@ public class AddPlant extends AppCompatActivity {
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
-        }
-    }
-
-
-    /**
-     * Bit map to string string.
-     *
-     * @param bitmap the bitmap
-     * @return the string
-     */
-/* BitMapToString and StringToBitMap
-     * http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
-     */
-    public String BitMapToString(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-
-    /**
-     * String to bit map bitmap.
-     *
-     * @param encodedString the encoded string
-     * @return the bitmap
-     */
-    public Bitmap StringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            bitmapPlant = bitmap;
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
             return null;
         }
     }
@@ -188,10 +155,12 @@ public class AddPlant extends AppCompatActivity {
         fert.setText(plantsObject.getSoilPH());
         water.setText(plantsObject.getWaterReq());
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            if (linearLayout.getChildAt(i) instanceof CheckBox) {
-                ((CheckBox) linearLayout.getChildAt(i)).setChecked(plantsObject.getCheckDays().get(0));
-                plantsObject.getCheckDays().remove(0);
+        if (plantsObject.getCheckDays() != null) {
+            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                if (linearLayout.getChildAt(i) instanceof CheckBox) {
+                    ((CheckBox) linearLayout.getChildAt(i)).setChecked(plantsObject.getCheckDays().get(0));
+                    plantsObject.getCheckDays().remove(0);
+                }
             }
         }
     }
@@ -209,6 +178,7 @@ public class AddPlant extends AppCompatActivity {
         EditText water = (EditText) findViewById(R.id.editWater);
         if (bitmapPlant != null) {
             String image = BitMapToString(bitmapPlant);
+            Log.d("Image length", String.valueOf(image.length()));
             tempPlant.setImage(image);
         }
         tempPlant.setName(name.getText().toString());
