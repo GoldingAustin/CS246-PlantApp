@@ -39,7 +39,7 @@ public class DbBackend extends DbObject {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        Log.d("Plants", mItems.get(0).getName());
+        this.closeDbConnection();
         return mItems;
     }
 }
