@@ -3,7 +3,6 @@ package com.cs246.plantapp;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -51,7 +50,7 @@ public class SearchableActivity extends AppCompatActivity {
                 Log.d("Selected Plant: ", plant.toString());
             }
         });
-        databaseObject = new DbBackend(SearchableActivity.this);
+
         handleIntent(getIntent());
     }
 
@@ -120,6 +119,7 @@ public class SearchableActivity extends AppCompatActivity {
      * @param query the query
      */
     protected void findSearch(String query) {
+        databaseObject = new DbBackend(SearchableActivity.this);
         ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
         plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
         Log.d("Results", String.valueOf(plantsAdapter.getCount()));

@@ -34,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static com.cs246.plantapp.Utilities.BitMapToString;
 import static com.cs246.plantapp.Utilities.StringToBitMap;
@@ -62,7 +63,9 @@ public class AddPlant extends AppCompatActivity {
             Gson gson = new Gson();
             String json = i.getStringExtra("searchPlant");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
-
+            if (plantsObject.getWaterReq() != null && plantsObject.getSpacing() != null) {
+                plantsObject.setWaterReq(convertRequiredWater(plantsObject) + " liters");
+            }
             if (plantsObject.getImage() != null) {
                 GetBitmapFromURLAsync getBitmapFromURLAsync = new GetBitmapFromURLAsync();
                 getBitmapFromURLAsync.execute(plantsObject.getImage());
@@ -135,6 +138,18 @@ public class AddPlant extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String convertRequiredWater(PlantsObject plantsObject) {
+        double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
+        Log.d("Diameter", String.valueOf(diameter));
+        if (plantsObject.getSpacing().contains("in")) diameter /= 12;
+        double area = (diameter / 2) * 3.14;
+        area *= area;
+        double gallons = .623 * Double.valueOf(plantsObject.getWaterReq()) * area;
+        double liter = gallons * 3.78541;
+        String literString = String.format("%.2f", liter);
+        return literString;
     }
 
     /**
