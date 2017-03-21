@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     editor.commit();
                     startActivity(i);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    finish();
                 } else {
                     View focusView;
                     focusView = mPasswordView;

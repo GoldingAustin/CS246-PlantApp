@@ -14,14 +14,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +38,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import static com.cs246.plantapp.Utilities.BitMapToString;
@@ -50,6 +55,7 @@ public class AddPlant extends AppCompatActivity {
     private static final String TAG = "AddPlant";
     private Bitmap bitmapPlant;
     private DatabaseReference mDatabase;
+    private boolean saved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,40 @@ public class AddPlant extends AppCompatActivity {
         setContentView(R.layout.activity_add_plant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (!saved) {
+            checkForIntentPrefs();
+        }
+
+        ImageButton img = (ImageButton) findViewById(R.id.imageButton);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "ImageButton: clicked");
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+
+            }
+        });
+        FloatingActionButton myFab = (FloatingActionButton) this.findViewById(R.id.savePlantButton);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setPlantFireBase();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                saved = true;
+                clearAfterSave();
+                startActivity(i);
+            }
+        });
+    }
+
+    public void clearAfterSave() {
+        Intent i = this.getIntent();
+        SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
+        i.removeExtra("searchPlant");
+        prefs.edit().clear().apply();
+    }
+
+    public void checkForIntentPrefs() {
         Intent i = this.getIntent();
         SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
         if (i != null && i.getStringExtra("searchPlant") != null) {
@@ -64,7 +104,8 @@ public class AddPlant extends AppCompatActivity {
             String json = i.getStringExtra("searchPlant");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
             if (plantsObject.getWaterReq() != null && plantsObject.getSpacing() != null) {
-                plantsObject.setWaterReq(convertRequiredWater(plantsObject) + " liters");
+                Pair<String, String> pair = convertRequiredWater(plantsObject);
+                plantsObject.setWaterReq(pair.first + " " + pair.second);
             }
             if (plantsObject.getImage() != null) {
                 GetBitmapFromURLAsync getBitmapFromURLAsync = new GetBitmapFromURLAsync();
@@ -80,26 +121,6 @@ public class AddPlant extends AppCompatActivity {
             img.setImageBitmap(bitTemp);
             ReplaceAddPlantValues(plantsObject);
         }
-
-        ImageButton img = (ImageButton) findViewById(R.id.imageButton);
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.v(TAG, "ImageButton: clicked");
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-
-            }
-        });
-
-        FloatingActionButton myFab = (FloatingActionButton) this.findViewById(R.id.savePlantButton);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setPlantFireBase();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     /* GetBitmapFromURLAsync and getBitmapFromURL
@@ -140,20 +161,48 @@ public class AddPlant extends AppCompatActivity {
         }
     }
 
-    public String convertRequiredWater(PlantsObject plantsObject) {
-        double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
-        Log.d("Diameter", String.valueOf(diameter));
-        if (plantsObject.getSpacing().contains("in")) diameter /= 12;
-        double area = (diameter / 2) * 3.14;
-        area *= area;
-        double gallons = .623 * Double.valueOf(plantsObject.getWaterReq()) * area;
-        double liter = gallons * 3.78541;
-        String literString = String.format("%.2f", liter);
-        return literString;
+    public Pair<String, String> convertRequiredWater(PlantsObject plantsObject) {
+        SharedPreferences prefs = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        double water = 0;
+        switch (plantsObject.getWaterReq()) {
+            case "0":
+                water = 0.2;
+                break;
+            case "1":
+                water = 0.5;
+                break;
+            case "2":
+                water = 0.8;
+                break;
+            default:
+                break;
+        }
+        if (prefs.getString("Measure", "").equals("Imperial")) {
+            double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
+            Log.d("Diameter", String.valueOf(diameter));
+            if (plantsObject.getSpacing().contains("in")) diameter /= 12;
+            else diameter /= 12;
+            diameter = (diameter / 2) * (diameter / 2);
+            double area = diameter * 3.14;
+            double gallons = .623 * water * area * 1.199166666666667;
+            double cups = gallons * 18.942;
+            return new Pair<String, String>(String.format("%.2f", cups), "Cups");
+        } else {
+            double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
+            Log.d("Diameter", String.valueOf(diameter));
+            if (plantsObject.getSpacing().contains("in")) diameter = (diameter / 12);
+            else if (plantsObject.getSpacing().contains("ft")) diameter = diameter;
+            else diameter = (diameter / 12);
+            diameter = (diameter / 2) * (diameter / 2);
+            double area = diameter * 3.14;
+            double gallons = 0.623 * water * area * 1.199166666666667;
+            double liter = gallons * 4546.09;
+            return new Pair<String, String>(String.format("%.2f", liter), "Liters");
+        }
     }
 
     /**
-     * Replace add plant values.
+     * Replace add plant values from Preferences.
      *
      * @param plantsObject the plants object
      */
@@ -161,11 +210,11 @@ public class AddPlant extends AppCompatActivity {
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
         EditText fert = (EditText) findViewById(R.id.editFertalizer);
-        EditText water = (EditText) findViewById(R.id.editWater);
+        Spinner water = (Spinner) findViewById(R.id.selectWaterNeed);
         name.setText(plantsObject.getName());
         potDiam.setText(plantsObject.getSpacing());
         fert.setText(plantsObject.getSoilPH());
-        water.setText(plantsObject.getWaterReq());
+        water.setSelection(Integer.parseInt(plantsObject.getWaterReq()));
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         if (plantsObject.getCheckDays() != null) {
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -178,7 +227,7 @@ public class AddPlant extends AppCompatActivity {
     }
 
     /**
-     * Sets plant object.
+     * Sets a plantobject.
      *
      * @return the plant object
      */
@@ -187,7 +236,7 @@ public class AddPlant extends AppCompatActivity {
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
         EditText fert = (EditText) findViewById(R.id.editFertalizer);
-        EditText water = (EditText) findViewById(R.id.editWater);
+        Spinner water = (Spinner) findViewById(R.id.selectWaterNeed);
         if (bitmapPlant != null) {
             String image = BitMapToString(bitmapPlant);
             Log.d("Image length", String.valueOf(image.length()));
@@ -196,7 +245,8 @@ public class AddPlant extends AppCompatActivity {
         tempPlant.setName(name.getText().toString());
         tempPlant.setSoilPH(fert.getText().toString());
         tempPlant.setSpacing(potDiam.getText().toString());
-        tempPlant.setWaterReq(water.getText().toString());
+        Log.d("Spinner Position", String.valueOf(water.getSelectedItemPosition()));
+        tempPlant.setWaterReq(String.valueOf(water.getSelectedItemPosition()));
         List<Boolean> checkDays = new ArrayList<>();
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -214,9 +264,9 @@ public class AddPlant extends AppCompatActivity {
      * Sets plant firebase.
      */
     public void setPlantFireBase() {
-        SharedPreferences prefs = this.getSharedPreferences("Login", Context.MODE_PRIVATE);
-        String user = prefs.getString("User", "");
         PlantsObject tempPlant = setPlantObject();
+        Pair<String, String> pair = convertRequiredWater(tempPlant);
+        tempPlant.setWaterReq(pair.first);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(tempPlant.getName()).setValue(tempPlant);
     }

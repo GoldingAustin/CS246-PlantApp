@@ -50,11 +50,17 @@ public class MainActivity extends AppCompatActivity {
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AddPlant.class);
+                i.putExtra("returnPlant", setIntent());
                 startActivity(i);
             }
         });
     }
 
+    public String setIntent() {
+        Intent i = this.getIntent();
+        String json = i.getStringExtra("tempPlant");
+        return json;
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -88,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(i);
-
+            finish();
         }
 
         if (id == R.id.action_logout) {
@@ -96,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
             setContentView(R.layout.activity_login);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -105,7 +112,14 @@ public class MainActivity extends AppCompatActivity {
      * Gets plants.
      */
     protected void getPlants() {
-        PlantsListAdapter plantsListAdapter = new PlantsListAdapter(getApplicationContext(), plants);
+        SharedPreferences prefsSettings =  this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        PlantsListAdapter plantsListAdapter;
+        if (prefsSettings.contains("Measure") && prefsSettings.getString("Measure", "").equals("Imperial")) {
+            plantsListAdapter = new PlantsListAdapter(getApplicationContext(), plants, "Imperial");
+        }
+        else {
+            plantsListAdapter = new PlantsListAdapter(getApplicationContext(), plants, "Metric");
+        }
         Log.d("Results", String.valueOf(plantsListAdapter.getCount()));
         ListView view = (ListView) findViewById(R.id.listPlantsView);
         view.setAdapter(plantsListAdapter);

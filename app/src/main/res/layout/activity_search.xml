@@ -25,5 +25,5 @@
     <include
         android:id="@+id/include"
         layout="@layout/content_search"
-        android:layout_height="187dp" />
+ />
 </android.support.design.widget.CoordinatorLayout>

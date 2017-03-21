@@ -13,44 +13,107 @@
     tools:context="com.cs246.plantapp.AddPlant"
     tools:showIn="@layout/activity_add_plant">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
 
-        <EditText
-            android:id="@+id/editPotDiameter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView4"
-            android:layout_alignParentEnd="true"
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_above="@+id/textViewName"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="15dp"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="@string/picture_of_your_plant"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_marginBottom="42dp"
             android:layout_alignBottom="@+id/editName"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="42dp"
+            android:text="@string/name"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         <EditText
             android:id="@+id/editName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textView3"
+            android:layout_above="@+id/textViewDiameter"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:inputType="text|textPersonName" />
+
+        <TextView
+            android:id="@+id/textViewDiameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pot_diameter"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_above="@+id/editPotDiameter"
+            android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/editPotDiameter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewWater"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+        <TextView
+            android:id="@+id/textViewWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/selectWaterNeed"
+            android:layout_centerHorizontal="true"
+            android:text="@string/water_needed_weekly"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+        <Spinner
+            android:id="@+id/selectWaterNeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textViewFertilizer"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp"
+            android:entries="@array/water_array"
+            android:dropDownWidth="match_parent" />
+
+        <TextView
+            android:id="@+id/textViewFertilizer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editFertalizer"
+            android:layout_centerHorizontal="true"
+            android:text="@string/fertilizer_ph_levels"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+    <EditText
+        android:id="@+id/editFertalizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayoutAddLabel"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -66,49 +129,42 @@
                 android:id="@+id/checkBox3"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Mon"
                 android:textDirection="firstStrongLtr" />
 
             <CheckBox
                 android:id="@+id/checkBox4"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Tue"
                 android:textDirection="firstStrongLtr" />
 
             <CheckBox
                 android:id="@+id/checkBox5"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Wed"
                 android:textDirection="firstStrongLtr" />
 
             <CheckBox
                 android:id="@+id/checkBox6"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Thu"
                 android:textDirection="firstStrongLtr" />
 
             <CheckBox
                 android:id="@+id/checkBox7"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Fri"
                 android:textDirection="firstStrongLtr" />
 
             <CheckBox
                 android:id="@+id/SatCheck"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Sat"
                 android:textDirection="firstStrongLtr" />
 
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Sun"
                 android:textDirection="firstStrongLtr" />
 
         </LinearLayout>
@@ -126,7 +182,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Mon."
+                android:text="@string/mon"
                 android:textAlignment="center"
                 android:textStyle="normal|bold" />
 
@@ -134,7 +190,7 @@
                 android:id="@+id/textView10"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Tue."
+                android:text="@string/tue"
                 android:textAlignment="center"
                 android:textStyle="normal|bold" />
 
@@ -142,7 +198,7 @@
                 android:id="@+id/Wed."
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Wed."
+                android:text="@string/wed"
                 android:textAlignment="center"
 
                 android:textStyle="normal|bold" />
@@ -151,7 +207,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Thu."
+                android:text="@string/thu"
                 android:textAlignment="center"
 
                 android:textStyle="normal|bold" />
@@ -160,16 +216,15 @@
                 android:id="@+id/Fri."
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Fri."
+                android:text="@string/fri"
                 android:textAlignment="center"
-
                 android:textStyle="normal|bold" />
 
             <TextView
                 android:id="@+id/Sat."
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Sat."
+                android:text="@string/sat"
                 android:textAlignment="center"
                 android:textStyle="normal|bold" />
 
@@ -177,75 +232,9 @@
                 android:id="@+id/textView12"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="Sun."
+                android:text="@string/sun"
                 android:textAlignment="center"
                 android:textStyle="normal|bold" />
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/editWater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView5"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="11dp"
-            android:ems="10"
-            android:inputType="text" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_above="@+id/editName"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="30dp"
-            android:background="@android:color/transparent"
-            android:cropToPadding="false"
-            android:scaleType="fitCenter"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editWater"
-            android:layout_centerHorizontal="true"
-            android:text="Water Needed Weekly"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pot Diameter"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:layout_above="@+id/editPotDiameter"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editFertalizer"
-            android:layout_centerHorizontal="true"
-            android:text="Fertilizer Ph Levels"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-        <EditText
-            android:id="@+id/editFertalizer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayoutAddLabel"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:ems="10"
-            android:inputType="text" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

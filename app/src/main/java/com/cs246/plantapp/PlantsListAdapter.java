@@ -1,6 +1,7 @@
 package com.cs246.plantapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import static com.cs246.plantapp.Utilities.StringToBitMap;
 public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
     private Context c;
     private ArrayList<PlantsObject> plants;
+    private String measurement;
 
     /**
      * Instantiates a new Plants adapter.
@@ -28,10 +30,11 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
      * @param c      the c
      * @param plants the plants
      */
-    public PlantsListAdapter(Context c, ArrayList<PlantsObject> plants) {
+    public PlantsListAdapter(Context c, ArrayList<PlantsObject> plants, String measurement) {
         super(c, 0, plants);
         this.c = c;
         this.plants = plants;
+        this.measurement = measurement;
     }
 
     @Override
@@ -59,7 +62,11 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
         TextView name = (TextView) convertView.findViewById(R.id.plants_list_name);
         name.setText(plantsObject.getName());
         TextView water = (TextView) convertView.findViewById(R.id.plants_list_water);
-        water.setText(plantsObject.getWaterReq());
+        if (measurement.equals("Imperial")) {
+            water.setText(plantsObject.getWaterReq() + " Cups Weekly");
+        } else {
+            water.setText(plantsObject.getWaterReq() + " ml Weekly");
+        }
         TextView diameter = (TextView) convertView.findViewById(R.id.plants_list_diameter);
         diameter.setText(plantsObject.getSpacing());
         TextView fertalizer = (TextView) convertView.findViewById(R.id.plants_list_fertalizer);
