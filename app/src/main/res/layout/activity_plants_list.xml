@@ -37,22 +37,18 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton2"
         android:layout_width="73dp"
         android:layout_height="74dp"
-        android:layout_gravity="top|left"
+        android:layout_gravity="top|start"
         android:clickable="true"
         app:backgroundTint="@color/cardview_light_background"
         app:fabSize="mini"
         app:layout_anchor="@+id/scrollView2"
-        app:layout_anchorGravity="bottom|right"
+        app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>

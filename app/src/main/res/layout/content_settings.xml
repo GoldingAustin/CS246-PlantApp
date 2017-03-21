@@ -3,6 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Switch
+        android:id="@+id/notificationsSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Notifications"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="19dp" />
+
     <TextView
         android:id="@+id/dayPrefLabel"
         android:layout_width="wrap_content"
@@ -22,8 +32,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_below="@+id/linearLayoutAddLabel"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp">
+        android:layout_alignParentStart="true">
 
         <CheckBox
             android:id="@+id/checkBox3"
@@ -75,15 +84,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
+        android:layout_marginTop="12dp"
         android:layout_below="@+id/dayPrefLabel"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp">
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Mon."
+            android:text="@string/mon"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
@@ -91,7 +100,7 @@
             android:id="@+id/textView10"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Tue."
+            android:text="@string/tue"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
@@ -99,7 +108,7 @@
             android:id="@+id/Wed."
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Wed."
+            android:text="@string/wed"
             android:textAlignment="center"
 
             android:textStyle="normal|bold" />
@@ -108,7 +117,7 @@
             android:id="@+id/textView8"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Thu."
+            android:text="@string/thu"
             android:textAlignment="center"
 
             android:textStyle="normal|bold" />
@@ -117,16 +126,15 @@
             android:id="@+id/Fri."
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Fri."
+            android:text="@string/fri"
             android:textAlignment="center"
-
             android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/Sat."
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Sat."
+            android:text="@string/sat"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
@@ -134,29 +142,39 @@
             android:id="@+id/textView12"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="Sun."
+            android:text="@string/sun"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewMeasurements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinnerMeasurements"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Select Measurement System" />
+
+    <Spinner
+        android:id="@+id/spinnerMeasurements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/saveButton"
+        android:entries="@array/measurements_array"
+        android:layout_alignBottom="@+id/saveButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="60dp" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
+        android:text="Save"
         android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="Save" />
+        android:layout_centerHorizontal="true" />
 
-    <Switch
-        android:id="@+id/notificationsSwitch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:checked="true"
-        android:text="Notifications" />
 
 
 </RelativeLayout>

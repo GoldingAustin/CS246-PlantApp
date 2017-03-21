@@ -168,4 +168,16 @@
     </string>
     <string name="logout">Logout</string>
     <string name="sign_in">Sign In</string>
+    <string name="name">Name</string>
+    <string name="pot_diameter">Pot Diameter</string>
+    <string name="water_needed_weekly">Water Needed Weekly</string>
+    <string name="fertilizer_ph_levels">Fertilizer Ph Levels</string>
+    <string name="mon">Mon.</string>
+    <string name="tue">Tue.</string>
+    <string name="wed">Wed.</string>
+    <string name="thu">Thu.</string>
+    <string name="fri">Fri.</string>
+    <string name="sun">Sun.</string>
+    <string name="sat">Sat.</string>
+    <string name="picture_of_your_plant">Picture of Your Plant</string>
 </resources>

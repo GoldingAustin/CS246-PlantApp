@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.google.gson.Gson;
@@ -89,11 +90,13 @@ public class SettingsActivity extends AppCompatActivity {
                         checkDays.add(checkBox.isChecked());
                     }
                 }
+                Spinner spinner = (Spinner) findViewById(R.id.spinnerMeasurements);
                 SharedPreferences prefs = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 Gson gson = new Gson();
                 String json = gson.toJson(checkDays);
                 editor.putString("Days", json);
+                editor.putString("Measure", spinner.getSelectedItem().toString());
                 editor.commit();
             }
         });

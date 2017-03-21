@@ -98,7 +98,7 @@ public class PlantsObject {
     }
 
     /**
-     * Sets spacing.
+     * Sets Pot Diameter.
      *
      * @param spacing the spacing
      */
