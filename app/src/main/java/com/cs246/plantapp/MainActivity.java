@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * http://stackoverflow.com/questions/36550991/repeating-alarm-for-specific-days-of-week-android
      * @param dayOfWeek
@@ -181,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
     private void scheduleAlarm(int dayOfWeek, Intent intent) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
 
         if(calendar.getTimeInMillis() < System.currentTimeMillis()) {
             calendar.add(Calendar.DAY_OF_YEAR, 7);

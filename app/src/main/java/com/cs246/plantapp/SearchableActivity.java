@@ -50,7 +50,6 @@ public class SearchableActivity extends AppCompatActivity {
                 Log.d("Selected Plant: ", plant.toString());
             }
         });
-
         handleIntent(getIntent());
     }
 
