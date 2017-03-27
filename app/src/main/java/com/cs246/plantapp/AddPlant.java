@@ -31,9 +31,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -63,9 +65,8 @@ public class AddPlant extends AppCompatActivity {
         setContentView(R.layout.activity_add_plant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (!saved) {
-            checkForIntentPrefs();
-        }
+        checkForIntentPrefs(this.getIntent());
+
 
         ImageButton img = (ImageButton) findViewById(R.id.imageButton);
         img.setOnClickListener(new View.OnClickListener() {
@@ -83,29 +84,31 @@ public class AddPlant extends AppCompatActivity {
                 setPlantFireBase();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 saved = true;
-                clearAfterSave();
+                //clearAfterSave();
                 startActivity(i);
             }
         });
     }
+    
 
-    public void clearAfterSave() {
-        Intent i = this.getIntent();
+    public void checkForIntentPrefs(Intent i) {
         SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
-        i.removeExtra("searchPlant");
-        prefs.edit().clear().apply();
-    }
-
-    public void checkForIntentPrefs() {
-        Intent i = this.getIntent();
-        SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
-        if (i != null && i.getStringExtra("searchPlant") != null) {
+        if (i.getStringExtra("searchPlant") != null) {
             Gson gson = new Gson();
             String json = i.getStringExtra("searchPlant");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
-            if (plantsObject.getWaterReq() != null && plantsObject.getSpacing() != null) {
-                Pair<String, String> pair = convertRequiredWater(plantsObject);
-                plantsObject.setWaterReq(pair.first + " " + pair.second);
+            switch (plantsObject.getWaterReq()) {
+                case "0.2":
+                    plantsObject.setWaterReq("0");
+                    break;
+                case "0.5":
+                    plantsObject.setWaterReq("1");
+                    break;
+                case "0.8":
+                    plantsObject.setWaterReq("2");
+                    break;
+                default:
+                    break;
             }
             if (plantsObject.getImage() != null) {
                 GetBitmapFromURLAsync getBitmapFromURLAsync = new GetBitmapFromURLAsync();
@@ -120,6 +123,23 @@ public class AddPlant extends AppCompatActivity {
             Bitmap bitTemp = StringToBitMap(plantsObject.getImage());
             img.setImageBitmap(bitTemp);
             ReplaceAddPlantValues(plantsObject);
+        }
+        SharedPreferences prefsSettings = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayoutAddLabel);
+        if (prefsSettings.contains("Days")) {
+            Gson gson = new Gson();
+            Type list = new TypeToken<List<Boolean>>(){}.getType();
+            List<Boolean> days = gson.fromJson(prefsSettings.getString("Days", ""), list);
+            for (int k = 0; k < linearLayout.getChildCount(); k++) {
+                if (linearLayout.getChildAt(k) instanceof CheckBox) {
+                    if (!days.get(k)) {
+                        ((CheckBox) linearLayout.getChildAt(k)).setVisibility(View.GONE);
+                        ((TextView) linearLayout1.getChildAt(k)).setVisibility(View.GONE);
+                       // days.remove(0);
+                    }
+                }
+            }
         }
     }
 
@@ -158,46 +178,6 @@ public class AddPlant extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public Pair<String, String> convertRequiredWater(PlantsObject plantsObject) {
-        SharedPreferences prefs = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        double water = 0;
-        switch (plantsObject.getWaterReq()) {
-            case "0":
-                water = 0.2;
-                break;
-            case "1":
-                water = 0.5;
-                break;
-            case "2":
-                water = 0.8;
-                break;
-            default:
-                break;
-        }
-        if (prefs.getString("Measure", "").equals("Imperial")) {
-            double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
-            Log.d("Diameter", String.valueOf(diameter));
-            if (plantsObject.getSpacing().contains("in")) diameter /= 12;
-            else diameter /= 12;
-            diameter = (diameter / 2) * (diameter / 2);
-            double area = diameter * 3.14;
-            double gallons = .623 * water * area * 1.199166666666667;
-            double cups = gallons * 18.942;
-            return new Pair<String, String>(String.format("%.2f", cups), "Cups");
-        } else {
-            double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
-            Log.d("Diameter", String.valueOf(diameter));
-            if (plantsObject.getSpacing().contains("in")) diameter = (diameter / 12);
-            else if (plantsObject.getSpacing().contains("ft")) diameter = diameter;
-            else diameter = (diameter / 12);
-            diameter = (diameter / 2) * (diameter / 2);
-            double area = diameter * 3.14;
-            double gallons = 0.623 * water * area * 1.199166666666667;
-            double liter = gallons * 4546.09;
-            return new Pair<String, String>(String.format("%.2f", liter), "Liters");
         }
     }
 
@@ -265,8 +245,6 @@ public class AddPlant extends AppCompatActivity {
      */
     public void setPlantFireBase() {
         PlantsObject tempPlant = setPlantObject();
-        Pair<String, String> pair = convertRequiredWater(tempPlant);
-        tempPlant.setWaterReq(pair.first);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(tempPlant.getName()).setValue(tempPlant);
     }
@@ -313,7 +291,6 @@ public class AddPlant extends AppCompatActivity {
             Log.v(TAG, ": Settings Selected");
             Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(i);
-
         }
 
         if (id == R.id.action_logout) {
@@ -323,7 +300,6 @@ public class AddPlant extends AppCompatActivity {
             startActivity(i);
             setContentView(R.layout.activity_login);
         }
-
 
         return super.onOptionsItemSelected(item);
     }

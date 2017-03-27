@@ -7,11 +7,12 @@
         android:id="@+id/notificationsSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="Notifications"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="19dp" />
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="19dp"
+        android:checked="true"
+        android:text="Notifications" />
 
     <TextView
         android:id="@+id/dayPrefLabel"
@@ -153,8 +154,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/spinnerMeasurements"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="Select Measurement System" />
+        android:layout_marginBottom="6dp"
+        android:text="Select Measurement System"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/spinnerMeasurements"

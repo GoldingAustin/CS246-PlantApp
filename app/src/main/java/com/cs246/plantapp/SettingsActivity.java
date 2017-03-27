@@ -98,6 +98,8 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.putString("Days", json);
                 editor.putString("Measure", spinner.getSelectedItem().toString());
                 editor.commit();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
             }
         });
 
