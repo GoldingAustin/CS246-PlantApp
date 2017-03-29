@@ -4,16 +4,19 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -49,17 +53,63 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton myFab = (FloatingActionButton) this.findViewById(R.id.addPlantButton);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                clearAdd();
                 Intent i = new Intent(getApplicationContext(), AddPlant.class);
-                i.putExtra("returnPlant", setIntent());
                 startActivity(i);
+            }
+        });
+
+        ListView view = (ListView) findViewById(R.id.listPlantsView);
+        view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
+                                mDatabase = FirebaseDatabase.getInstance().getReference();
+                                mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(plant.getName()).removeValue();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.plantDelete);
+                builder.setMessage("Delete this plant?");
+                builder.setPositiveButton("Yes", dialogClickListener);
+                builder.setNegativeButton("No", dialogClickListener);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
+                Intent i = new Intent(getApplicationContext(), AddPlant.class);
+                SharedPreferences prefs = getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                Gson gson = new Gson();
+                String json = gson.toJson(plant);
+                editor.putString("tempPlant", json);
+                editor.commit();
+                startActivity(i);
+                Log.d("Selected Plant: ", plant.toString());
             }
         });
     }
 
-    public String setIntent() {
+    public void clearAdd() {
         Intent i = this.getIntent();
-        String json = i.getStringExtra("tempPlant");
-        return json;
+        SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
+        i.removeExtra("searchPlant");
+        prefs.edit().clear().apply();
     }
     @Override
     public void onStart() {
