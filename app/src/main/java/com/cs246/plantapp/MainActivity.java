@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -16,8 +17,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The type Main activity.
@@ -39,10 +46,11 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private final ArrayList<PlantsObject> plants = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getFromDatabase();
@@ -60,13 +68,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ListView view = (ListView) findViewById(R.id.listPlantsView);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            @Override
+            public void onGlobalLayout() {
+                setNotifications();
+            }
+        });
+
         view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
                                 mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -90,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Item Position", String.valueOf(position));
                 PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
                 Intent i = new Intent(getApplicationContext(), AddPlant.class);
                 SharedPreferences prefs = getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
@@ -105,12 +123,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void clearAdd() {
+    /**
+     * Clear add.
+     */
+    private void clearAdd() {
         Intent i = this.getIntent();
         SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
         i.removeExtra("searchPlant");
         prefs.edit().clear().apply();
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -161,19 +183,17 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Gets plants.
      */
-    protected void getPlants() {
-        SharedPreferences prefsSettings =  this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+    private void getPlants()  {
+        SharedPreferences prefsSettings = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         PlantsListAdapter plantsListAdapter;
         if (prefsSettings.contains("Measure") && prefsSettings.getString("Measure", "").equals("Imperial")) {
             plantsListAdapter = new PlantsListAdapter(getApplicationContext(), plants, "Imperial");
-        }
-        else {
+        } else {
             plantsListAdapter = new PlantsListAdapter(getApplicationContext(), plants, "Metric");
         }
         Log.d("Results", String.valueOf(plantsListAdapter.getCount()));
         ListView view = (ListView) findViewById(R.id.listPlantsView);
         view.setAdapter(plantsListAdapter);
-        setNotifications();
     }
 
     /**
@@ -184,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    plants.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        plants.add(snapshot.getValue(PlantsObject.class));
-                    }
-                    getPlants();
+                plants.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    plants.add(snapshot.getValue(PlantsObject.class));
+                }
+                getPlants();
             }
 
             @Override
@@ -205,19 +225,24 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences("Settings", MODE_PRIVATE);
         if (prefs.contains("Notifications")) {
             if (prefs.getString("Notifications", "").equals("true")) {
+                ListView view = (ListView) findViewById(R.id.listPlantsView);
+                int position = 0;
                 for (PlantsObject plantsObject : plants) {
+                    TextView water = (TextView) view.getChildAt(position).findViewById(R.id.plants_list_water);
+                    Log.d("Retrieved Water ", water.getText().toString());
                     for (int i = 0; i < plantsObject.getCheckDays().size(); i++) {
-                        if (plantsObject.getCheckDays().get(i)) {
+                        if (plantsObject.getCheckDays().get("Day " + String.valueOf(i))) {
                             Intent intent = new Intent(MainActivity.this, AlertReceiver.class);
                             Notification.Builder builder = new Notification.Builder(this);
-                            builder.setContentTitle("Water Your Plant Today");
-                            builder.setContentText("You've scheduled to water your " + plantsObject.getName() + "today");
-                            builder.setSmallIcon(R.drawable.ic_notifications_black_24dp);
+                            builder.setContentTitle(plantsObject.getName() + " needs to be watered today");
+                            builder.setContentText("This plant needs " + water.getText().toString());
+                            builder.setSmallIcon(R.drawable.ic_stat_notify);
                             intent.putExtra(AlertReceiver.NOTIFICATION_ID, 1);
                             intent.putExtra(AlertReceiver.NOTIFICATION, builder.build());
-                            scheduleAlarm(i, intent);
+                            scheduleAlarm(i + 1, intent);
                         }
                     }
+                    position++;
                 }
             }
         }
@@ -226,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * http://stackoverflow.com/questions/36550991/repeating-alarm-for-specific-days-of-week-android
+     *
      * @param dayOfWeek
      * @param intent
      */
@@ -233,17 +259,19 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
         calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
 
-        if(calendar.getTimeInMillis() < System.currentTimeMillis()) {
+        if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
             calendar.add(Calendar.DAY_OF_YEAR, 7);
         }
 
         PendingIntent yourIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, yourIntent);
-        Date date = new Date(calendar.getTimeInMillis());
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, yourIntent);
+        Date dater = new Date(calendar.getTimeInMillis());
         Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
-        Log.d("Time for Notification", format.format(date));
+        Log.d("Time for Notification", format.format(dater));
     }
 }

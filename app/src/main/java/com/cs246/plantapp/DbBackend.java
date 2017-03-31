@@ -6,14 +6,13 @@ package com.cs246.plantapp;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 /**
  * The type Db backend.
  */
-public class DbBackend extends DbObject {
+class DbBackend extends DbObject {
     /**
      * Instantiates a new Db backend.
      *
@@ -35,7 +34,7 @@ public class DbBackend extends DbObject {
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                mItems.add(new PlantsObject(cursor.getString(cursor.getColumnIndex("Name")), cursor.getString(cursor.getColumnIndex("Soil pH Requirements")), cursor.getString(cursor.getColumnIndex("Category")),  cursor.getString(cursor.getColumnIndex("Spacing")), cursor.getString(cursor.getColumnIndex("Sun Exposure")), cursor.getString(cursor.getColumnIndex("Water Requirements")), cursor.getString(cursor.getColumnIndex("image"))));
+                mItems.add(new PlantsObject(cursor.getString(cursor.getColumnIndex("Name")), cursor.getString(cursor.getColumnIndex("Soil pH Requirements")), cursor.getString(cursor.getColumnIndex("Category")), cursor.getString(cursor.getColumnIndex("Spacing")), cursor.getString(cursor.getColumnIndex("Sun Exposure")), cursor.getString(cursor.getColumnIndex("Water Requirements")), cursor.getString(cursor.getColumnIndex("image"))));
             } while (cursor.moveToNext());
         }
         cursor.close();

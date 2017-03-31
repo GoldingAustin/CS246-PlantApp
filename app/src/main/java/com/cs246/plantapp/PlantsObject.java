@@ -1,12 +1,21 @@
 package com.cs246.plantapp;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by austingolding on 2/20/17.
  */
 public class PlantsObject {
+
+    private String name;
+    private String soilPH;
+    private String category;
+    private String spacing;
+    private String sunExpo;
+    private String waterReq;
+    private String image;
+    private Map<String, Boolean> checkDays;
+
     /**
      * Is name valid boolean.
      *
@@ -38,37 +47,13 @@ public class PlantsObject {
         this.image = image;
     }
 
-    public PlantsObject(String name, String soilPH, String category, String spacing, String sunExpo, String waterReq, ByteArrayOutputStream compressed) {
-        this.name = name;
-        this.soilPH = soilPH;
-        this.category = category;
-        this.spacing = spacing;
-        this.sunExpo = sunExpo;
-        this.waterReq = waterReq;
-        this.compressed = compressed;
-    }
 
     /**
      * Instantiates a new Plants object.
      */
-    public PlantsObject() {}
-
-    /**
-     * Instantiates a new Plants object.
-     *
-     * @param name the name
-     */
-    public PlantsObject(String name) {
-        this.name = name;
+    public PlantsObject() {
     }
 
-    public ByteArrayOutputStream getCompressed() {
-        return compressed;
-    }
-
-    public void setCompressed(ByteArrayOutputStream compressed) {
-        this.compressed = compressed;
-    }
 
     /**
      * Sets name.
@@ -88,14 +73,6 @@ public class PlantsObject {
         this.soilPH = soilPH;
     }
 
-    /**
-     * Sets category.
-     *
-     * @param category the category
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     /**
      * Sets Pot Diameter.
@@ -106,14 +83,6 @@ public class PlantsObject {
         this.spacing = spacing;
     }
 
-    /**
-     * Sets sun expo.
-     *
-     * @param sunExpo the sun expo
-     */
-    public void setSunExpo(String sunExpo) {
-        this.sunExpo = sunExpo;
-    }
 
     /**
      * Sets water req.
@@ -133,22 +102,13 @@ public class PlantsObject {
         this.image = image;
     }
 
-    private String name;
-    private String soilPH;
-    private String category;
-    private String spacing;
-    private String sunExpo;
-    private String waterReq;
-    private String image;
-    private ByteArrayOutputStream compressed;
-    private List<Boolean> checkDays;
 
     /**
      * Gets check days.
      *
      * @return the check days
      */
-    public List<Boolean> getCheckDays() {
+    public Map<String, Boolean> getCheckDays() {
         return checkDays;
     }
 
@@ -157,7 +117,7 @@ public class PlantsObject {
      *
      * @param checkDays the check days
      */
-    public void setCheckDays(List<Boolean> checkDays) {
+    public void setCheckDays(Map<String, Boolean> checkDays) {
         this.checkDays = checkDays;
     }
 
@@ -179,14 +139,6 @@ public class PlantsObject {
         return soilPH;
     }
 
-    /**
-     * Gets category.
-     *
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
 
     /**
      * Gets spacing.
@@ -197,14 +149,6 @@ public class PlantsObject {
         return spacing;
     }
 
-    /**
-     * Gets sun expo.
-     *
-     * @return the sun expo
-     */
-    public String getSunExpo() {
-        return sunExpo;
-    }
 
     /**
      * Gets water req.

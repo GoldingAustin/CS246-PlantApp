@@ -10,17 +10,16 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * The type Db object.
  */
-public class DbObject {
-    private static DatabaseHelper dbHelper;
-    private SQLiteDatabase db;
+class DbObject {
+    private final SQLiteDatabase db;
 
     /**
      * Instantiates a new Db object.
      *
      * @param context the context
      */
-    public DbObject(Context context) {
-        dbHelper = new DatabaseHelper(context);
+    DbObject(Context context) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
         this.db = dbHelper.getReadableDatabase();
     }
 
@@ -29,14 +28,14 @@ public class DbObject {
      *
      * @return the db connection
      */
-    public SQLiteDatabase getDbConnection() {
+    SQLiteDatabase getDbConnection() {
         return this.db;
     }
 
     /**
      * Close db connection.
      */
-    public void closeDbConnection() {
+    void closeDbConnection() {
         if (this.db != null) {
             this.db.close();
         }

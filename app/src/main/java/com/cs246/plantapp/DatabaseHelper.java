@@ -12,7 +12,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 /**
  * The type Database helper.
  */
-public class DatabaseHelper extends SQLiteAssetHelper {
+class DatabaseHelper extends SQLiteAssetHelper {
     private static final String name = "PlantsApp2.db";
     private static final int version = 1;
 

@@ -65,6 +65,7 @@
             android:label="@string/title_activity_plants_app"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"></activity>
+        <receiver android:name=".AlertReceiver" />
     </application>
 
 </manifest>
