@@ -47,8 +47,6 @@ public class Utilities {
         byte [] yuv = new byte[inputWidth*inputHeight*3/2];
         encodeYUV420SP(yuv, argb, inputWidth, inputHeight);
 
-        //scaled.recycle();
-
         return yuv;
     }
 
