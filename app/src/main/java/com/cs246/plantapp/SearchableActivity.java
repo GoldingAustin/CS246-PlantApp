@@ -26,11 +26,6 @@ import java.util.ArrayList;
 public class SearchableActivity extends AppCompatActivity {
 
     private ListView listView;
-    private DbBackend databaseObject;
-    /**
-     * The Plants adapter.
-     */
-    PlantsAdapter plantsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +35,8 @@ public class SearchableActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ListView view = (ListView) findViewById(R.id.listView);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PlantsObject plant = (PlantsObject) parent.getItemAtPosition(position);
                 Intent i = new Intent(getApplicationContext(), AddPlant.class);
                 Gson gson = new Gson();
@@ -86,18 +82,6 @@ public class SearchableActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * On item click.
-     *
-     * @param parent   the parent
-     * @param v        the v
-     * @param position the position
-     * @param id       the id
-     */
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -117,10 +101,13 @@ public class SearchableActivity extends AppCompatActivity {
      *
      * @param query the query
      */
-    protected void findSearch(String query) {
-        databaseObject = new DbBackend(SearchableActivity.this);
+    private void findSearch(String query) {
+        DbBackend databaseObject = new DbBackend(SearchableActivity.this);
         ArrayList<PlantsObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
-        plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
+        /*
+      The Plants adapter.
+     */
+        PlantsAdapter plantsAdapter = new PlantsAdapter(getApplicationContext(), dictionaryObject);
         Log.d("Results", String.valueOf(plantsAdapter.getCount()));
         ListView view = (ListView) findViewById(R.id.listView);
         view.setAdapter(plantsAdapter);
