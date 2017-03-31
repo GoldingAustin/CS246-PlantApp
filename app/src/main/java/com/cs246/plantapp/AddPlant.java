@@ -14,11 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,10 +36,9 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import static com.cs246.plantapp.Utilities.BitMapToString;
 import static com.cs246.plantapp.Utilities.StringToBitMap;
@@ -53,11 +50,10 @@ public class AddPlant extends AppCompatActivity {
     /**
      * The Request image capture.
      */
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String TAG = "AddPlant";
     private Bitmap bitmapPlant;
-    private DatabaseReference mDatabase;
-    private boolean saved = false;
+    private String oldName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,16 +79,19 @@ public class AddPlant extends AppCompatActivity {
             public void onClick(View v) {
                 setPlantFireBase();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                saved = true;
-                //clearAfterSave();
                 startActivity(i);
             }
         });
 
     }
-    
 
-    public void checkForIntentPrefs(Intent i) {
+
+    /**
+     * Check for intent prefs.
+     *
+     * @param i the
+     */
+    private void checkForIntentPrefs(Intent i) {
         SharedPreferences prefs = this.getSharedPreferences("AddPlant", Context.MODE_PRIVATE);
         if (i.getStringExtra("searchPlant") != null) {
             Gson gson = new Gson();
@@ -120,6 +119,7 @@ public class AddPlant extends AppCompatActivity {
             Gson gson = new Gson();
             String json = prefs.getString("tempPlant", "");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
+            oldName = plantsObject.getName();
             ImageView img = (ImageView) findViewById(R.id.imageButton);
             Bitmap bitTemp = StringToBitMap(plantsObject.getImage());
             img.setImageBitmap(bitTemp);
@@ -130,24 +130,28 @@ public class AddPlant extends AppCompatActivity {
         LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayoutAddLabel);
         if (prefsSettings.contains("Days")) {
             Gson gson = new Gson();
-            Type list = new TypeToken<List<Boolean>>(){}.getType();
+            Type list = new TypeToken<List<Boolean>>() {
+            }.getType();
             List<Boolean> days = gson.fromJson(prefsSettings.getString("Days", ""), list);
             for (int k = 0; k < linearLayout.getChildCount(); k++) {
                 if (linearLayout.getChildAt(k) instanceof CheckBox) {
                     if (!days.get(k)) {
                         ((CheckBox) linearLayout.getChildAt(k)).setVisibility(View.GONE);
                         ((TextView) linearLayout1.getChildAt(k)).setVisibility(View.GONE);
-                       // days.remove(0);
+                        // days.remove(0);
                     }
                 }
             }
         }
     }
 
-    /* GetBitmapFromURLAsync and getBitmapFromURL
+    /**
+     * The type Get bitmap from url async.
+     */
+/* GetBitmapFromURLAsync and getBitmapFromURL
     *http://stackoverflow.com/questions/37510411/download-an-image-into-bitmap-file-in-android
     */
-    public class GetBitmapFromURLAsync extends AsyncTask<String, Void, Bitmap> {
+    private class GetBitmapFromURLAsync extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... params) {
             return getBitmapFromURL(params[0]);
@@ -167,15 +171,14 @@ public class AddPlant extends AppCompatActivity {
      * @param src the src
      * @return the bitmap from url
      */
-    public Bitmap getBitmapFromURL(String src) {
+    private Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+            return BitmapFactory.decodeStream(input);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -187,7 +190,7 @@ public class AddPlant extends AppCompatActivity {
      *
      * @param plantsObject the plants object
      */
-    public void ReplaceAddPlantValues(PlantsObject plantsObject) {
+    private void ReplaceAddPlantValues(PlantsObject plantsObject) {
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
         EditText fert = (EditText) findViewById(R.id.editFertalizer);
@@ -200,8 +203,11 @@ public class AddPlant extends AppCompatActivity {
         if (plantsObject.getCheckDays() != null) {
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 if (linearLayout.getChildAt(i) instanceof CheckBox) {
-                    ((CheckBox) linearLayout.getChildAt(i)).setChecked(plantsObject.getCheckDays().get(0));
-                    plantsObject.getCheckDays().remove(0);
+                    String key = "Day " + String.valueOf(((CheckBox) linearLayout.getChildAt(i)).getContentDescription());
+                    if (plantsObject.getCheckDays().containsKey(key)) {
+                        ((CheckBox) linearLayout.getChildAt(i)).setChecked(plantsObject.getCheckDays().get(key));
+//                        plantsObject.getCheckDays().remove(0);
+                    }
                 }
             }
         }
@@ -212,7 +218,7 @@ public class AddPlant extends AppCompatActivity {
      *
      * @return the plant object
      */
-    public PlantsObject setPlantObject() {
+    private PlantsObject setPlantObject() {
         PlantsObject tempPlant = new PlantsObject();
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
@@ -228,12 +234,12 @@ public class AddPlant extends AppCompatActivity {
         tempPlant.setSpacing(potDiam.getText().toString());
         Log.d("Spinner Position", String.valueOf(water.getSelectedItemPosition()));
         tempPlant.setWaterReq(String.valueOf(water.getSelectedItemPosition()));
-        List<Boolean> checkDays = new ArrayList<>();
+        Map<String, Boolean> checkDays = new HashMap<>();
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             if (linearLayout.getChildAt(i) instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
-                checkDays.add(checkBox.isChecked());
+                checkDays.put("Day " + String.valueOf(checkBox.getContentDescription()), checkBox.isChecked());
             }
         }
         tempPlant.setCheckDays(checkDays);
@@ -244,9 +250,12 @@ public class AddPlant extends AppCompatActivity {
     /**
      * Sets plant firebase.
      */
-    public void setPlantFireBase() {
+    private void setPlantFireBase() {
         PlantsObject tempPlant = setPlantObject();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        if (!oldName.equals(tempPlant.getName()) && !oldName.isEmpty()) {
+            mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(oldName).removeValue();
+        }
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(tempPlant.getName()).setValue(tempPlant);
     }
 

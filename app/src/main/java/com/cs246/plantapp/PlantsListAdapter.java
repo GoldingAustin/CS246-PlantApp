@@ -1,7 +1,6 @@
 package com.cs246.plantapp;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.util.Pair;
@@ -13,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import static com.cs246.plantapp.Utilities.StringToBitMap;
@@ -21,21 +20,19 @@ import static com.cs246.plantapp.Utilities.StringToBitMap;
 /**
  * Created by austingolding on 3/16/17.
  */
-
-public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
-    private Context c;
-    private ArrayList<PlantsObject> plants;
-    private String measurement;
+class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
+    private final ArrayList<PlantsObject> plants;
+    private final String measurement;
 
     /**
      * Instantiates a new Plants adapter.
      *
-     * @param c      the c
-     * @param plants the plants
+     * @param c           the c
+     * @param plants      the plants
+     * @param measurement the measurement
      */
     public PlantsListAdapter(Context c, ArrayList<PlantsObject> plants, String measurement) {
         super(c, 0, plants);
-        this.c = c;
         this.plants = plants;
         this.measurement = measurement;
     }
@@ -57,7 +54,7 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        String[] days = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         PlantsObject plantsObject = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.plants_list, parent, false);
@@ -68,9 +65,9 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
 
         String day = "";
         int numDays = 0;
-        List<Boolean> checks = plantsObject.getCheckDays();
+        Map<String, Boolean> checks = plantsObject.getCheckDays();
         for (int i = 0; i < checks.size(); i++) {
-            if (checks.get(i)) {
+            if (checks.get("Day " + String.valueOf(i))) {
                 day += days[i] + " ";
                 numDays++;
             }
@@ -79,8 +76,11 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
         daysToWater.setText(day);
         Pair<String, String> tempWater = convertRequiredWater(plantsObject);
         Double waterPerDay = 0.0;
-        if (numDays > 0) {waterPerDay = (Double.valueOf(tempWater.first) / numDays);}
-        else { waterPerDay = Double.valueOf(tempWater.first); }
+        if (numDays > 0) {
+            waterPerDay = (Double.valueOf(tempWater.first) / numDays);
+        } else {
+            waterPerDay = Double.valueOf(tempWater.first);
+        }
         water.setText(String.valueOf(waterPerDay.intValue()) + " " + tempWater.second + " per day");
         TextView diameter = (TextView) convertView.findViewById(R.id.plants_list_diameter);
         diameter.setText(plantsObject.getSpacing());
@@ -94,7 +94,13 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
         return convertView;
     }
 
-    public Pair<String, String> convertRequiredWater(PlantsObject plantsObject) {
+    /**
+     * Convert required water pair.
+     *
+     * @param plantsObject the plants object
+     * @return the pair
+     */
+    private Pair<String, String> convertRequiredWater(PlantsObject plantsObject) {
         double water = 0;
         switch (plantsObject.getWaterReq()) {
             case "0":
@@ -119,8 +125,8 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
             double area = diameter * 3.14;
             double gallons = 0.623 * water * area * 1.199166666666667;
             double liter = gallons * 4546.09;
-            return new Pair<String, String>(String.format("%.2f", liter), "ml");
-        }   else {
+            return new Pair<>(String.format("%.2f", liter), "ml");
+        } else {
             double diameter = new Scanner(plantsObject.getSpacing()).useDelimiter("\\D+").nextDouble();
             Log.d("Diameter", String.valueOf(diameter));
             if (plantsObject.getSpacing().contains("in")) diameter /= 12;
@@ -129,7 +135,7 @@ public class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
             double area = diameter * 3.14;
             double gallons = .623 * water * area * 1.199166666666667;
             double cups = gallons * 18.942;
-            return new Pair<String, String>(String.format("%.2f", cups), "cups");
+            return new Pair<>(String.format("%.2f", cups), "cups");
         }
     }
 }

@@ -24,12 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * The type Settings activity.
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.content_settings);
+        setContentView(R.layout.content_settings);
         final Switch aSwitch = (Switch) findViewById(R.id.notificationsSwitch);
         SharedPreferences prefs = this.getSharedPreferences("Settings", MODE_PRIVATE);
         if (prefs.contains("Notifications")) {
@@ -41,35 +44,36 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         aSwitch.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               /**
-                * http://stackoverflow.com/questions/4315611/android-get-all-pendingintents-set-with-alarmmanager
-                */
-               if (!aSwitch.isChecked()) {
-                   AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+            @Override
+            public void onClick(View v) {
+                /**
+                 * http://stackoverflow.com/questions/4315611/android-get-all-pendingintents-set-with-alarmmanager
+                 */
+                if (!aSwitch.isChecked()) {
+                    AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
-                   Intent updateServiceIntent = new Intent(getApplicationContext(), AlertReceiver.class);
-                   PendingIntent pendingUpdateIntent = PendingIntent.getService(getApplicationContext(), 0, updateServiceIntent, 0);
+                    Intent updateServiceIntent = new Intent(getApplicationContext(), AlertReceiver.class);
+                    PendingIntent pendingUpdateIntent = PendingIntent.getService(getApplicationContext(), 0, updateServiceIntent, 0);
 
-                   // Cancel alarms
-                   try {
-                       alarmManager.cancel(pendingUpdateIntent);
-                       Log.d("Settings", "Notifications cleared");
-                   } catch (Exception e) {
-                       Log.e("Settings", "AlarmManager update was not canceled. " + e.toString());
-                   }
-               }
-               SharedPreferences prefs = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-               SharedPreferences.Editor editor = prefs.edit();
-               editor.putString("Notifications", String.valueOf(aSwitch.isChecked()));
-               editor.commit();
-           }
-       });
+                    // Cancel alarms
+                    try {
+                        alarmManager.cancel(pendingUpdateIntent);
+                        Log.d("Settings", "Notifications cleared");
+                    } catch (Exception e) {
+                        Log.e("Settings", "AlarmManager update was not canceled. " + e.toString());
+                    }
+                }
+                SharedPreferences prefs = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("Notifications", String.valueOf(aSwitch.isChecked()));
+                editor.commit();
+            }
+        });
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         if (prefs.contains("Days")) {
             Gson gson = new Gson();
-            Type list = new TypeToken<List<Boolean>>(){}.getType();
+            Type list = new TypeToken<List<Boolean>>() {
+            }.getType();
             List<Boolean> days = gson.fromJson(prefs.getString("Days", ""), list);
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 if (linearLayout.getChildAt(i) instanceof CheckBox) {

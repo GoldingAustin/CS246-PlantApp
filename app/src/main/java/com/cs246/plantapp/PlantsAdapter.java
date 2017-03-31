@@ -12,9 +12,8 @@ import java.util.ArrayList;
 /**
  * Created by austingolding on 2/22/17.
  */
-public class PlantsAdapter extends ArrayAdapter<PlantsObject> {
-    private Context c;
-    private ArrayList<PlantsObject> plants;
+class PlantsAdapter extends ArrayAdapter<PlantsObject> {
+    private final ArrayList<PlantsObject> plants;
 
     /**
      * Instantiates a new Plants adapter.
@@ -24,7 +23,6 @@ public class PlantsAdapter extends ArrayAdapter<PlantsObject> {
      */
     public PlantsAdapter(Context c, ArrayList<PlantsObject> plants) {
         super(c, 0, plants);
-        this.c = c;
         this.plants = plants;
     }
 
