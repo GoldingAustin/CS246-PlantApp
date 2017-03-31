@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -77,9 +78,11 @@ public class AddPlant extends AppCompatActivity {
         FloatingActionButton myFab = (FloatingActionButton) this.findViewById(R.id.savePlantButton);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setPlantFireBase();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
+                if (checkFields()) {
+                    setPlantFireBase();
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                }
             }
         });
 
@@ -97,18 +100,22 @@ public class AddPlant extends AppCompatActivity {
             Gson gson = new Gson();
             String json = i.getStringExtra("searchPlant");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
-            switch (plantsObject.getWaterReq()) {
-                case "0.2":
-                    plantsObject.setWaterReq("0");
-                    break;
-                case "0.5":
-                    plantsObject.setWaterReq("1");
-                    break;
-                case "0.8":
-                    plantsObject.setWaterReq("2");
-                    break;
-                default:
-                    break;
+            if (plantsObject.getWaterReq() != null) {
+                switch (plantsObject.getWaterReq()) {
+                    case "0.2":
+                        plantsObject.setWaterReq("0");
+                        break;
+                    case "0.5":
+                        plantsObject.setWaterReq("1");
+                        break;
+                    case "0.8":
+                        plantsObject.setWaterReq("2");
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                plantsObject.setWaterReq("0");
             }
             if (plantsObject.getImage() != null) {
                 GetBitmapFromURLAsync getBitmapFromURLAsync = new GetBitmapFromURLAsync();
@@ -120,9 +127,11 @@ public class AddPlant extends AppCompatActivity {
             String json = prefs.getString("tempPlant", "");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
             oldName = plantsObject.getName();
-            ImageView img = (ImageView) findViewById(R.id.imageButton);
-            Bitmap bitTemp = StringToBitMap(plantsObject.getImage());
-            img.setImageBitmap(bitTemp);
+            if (plantsObject.getImage() != null) {
+                ImageView img = (ImageView) findViewById(R.id.imageButton);
+                Bitmap bitTemp = StringToBitMap(plantsObject.getImage());
+                img.setImageBitmap(bitTemp);
+            }
             ReplaceAddPlantValues(plantsObject);
         }
         SharedPreferences prefsSettings = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
@@ -211,6 +220,36 @@ public class AddPlant extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private boolean checkFields() {
+        boolean valid = true;
+        EditText name = (EditText) findViewById(R.id.editName);
+        if (name.getText().toString().isEmpty()) {
+            valid = false;
+            name.setError("Must Enter a Name");
+        }
+        EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
+        if (potDiam.getText().toString().isEmpty()) {
+            valid = false;
+            potDiam.setError("Must Enter a Diameter");
+        }
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        boolean hasCheck = false;
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            if (linearLayout.getChildAt(i) instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
+                if (checkBox.isChecked()) {
+                    hasCheck = true;
+                }
+            }
+        }
+        if (hasCheck == false) {
+            valid = false;
+            Toast.makeText(getApplicationContext(), "Must Select at Least One Day to Water",
+                    Toast.LENGTH_SHORT).show();
+        }
+        return valid;
     }
 
     /**
