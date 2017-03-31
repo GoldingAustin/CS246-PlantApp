@@ -58,6 +58,7 @@ public class AddPlant extends AppCompatActivity {
     private Bitmap bitmapPlant;
     private DatabaseReference mDatabase;
     private boolean saved = false;
+    private String oldName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,7 @@ public class AddPlant extends AppCompatActivity {
             Gson gson = new Gson();
             String json = prefs.getString("tempPlant", "");
             PlantsObject plantsObject = gson.fromJson(json, PlantsObject.class);
+            oldName = plantsObject.getName();
             ImageView img = (ImageView) findViewById(R.id.imageButton);
             Bitmap bitTemp = StringToBitMap(plantsObject.getImage());
             img.setImageBitmap(bitTemp);
@@ -247,6 +249,9 @@ public class AddPlant extends AppCompatActivity {
     public void setPlantFireBase() {
         PlantsObject tempPlant = setPlantObject();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        if (!oldName.equals(tempPlant.getName())) {
+            mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(oldName).removeValue();
+        }
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(tempPlant.getName()).setValue(tempPlant);
     }
 
