@@ -84,8 +84,6 @@ class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
         water.setText(String.valueOf(waterPerDay.intValue()) + " " + tempWater.second + " per day");
         TextView diameter = (TextView) convertView.findViewById(R.id.plants_list_diameter);
         diameter.setText(plantsObject.getSpacing());
-        TextView fertalizer = (TextView) convertView.findViewById(R.id.plants_list_fertalizer);
-        fertalizer.setText(plantsObject.getSoilPH());
 
         ImageView image = (ImageView) convertView.findViewById(R.id.plants_list_thumbnail);
         Bitmap bitmap = StringToBitMap(plantsObject.getImage());
