@@ -193,12 +193,14 @@ public class AddPlant extends AppCompatActivity {
     private void ReplaceAddPlantValues(PlantsObject plantsObject) {
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
-        EditText fert = (EditText) findViewById(R.id.editFertalizer);
         Spinner water = (Spinner) findViewById(R.id.selectWaterNeed);
         name.setText(plantsObject.getName());
-        potDiam.setText(plantsObject.getSpacing());
-        fert.setText(plantsObject.getSoilPH());
-        water.setSelection(Integer.parseInt(plantsObject.getWaterReq()));
+        if (!plantsObject.getSpacing().isEmpty()) {
+            potDiam.setText(plantsObject.getSpacing());
+        }
+        if (!plantsObject.getWaterReq().isEmpty()) {
+            water.setSelection(Integer.parseInt(plantsObject.getWaterReq()));
+        }
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         if (plantsObject.getCheckDays() != null) {
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -222,7 +224,6 @@ public class AddPlant extends AppCompatActivity {
         PlantsObject tempPlant = new PlantsObject();
         EditText name = (EditText) findViewById(R.id.editName);
         EditText potDiam = (EditText) findViewById(R.id.editPotDiameter);
-        EditText fert = (EditText) findViewById(R.id.editFertalizer);
         Spinner water = (Spinner) findViewById(R.id.selectWaterNeed);
         if (bitmapPlant != null) {
             String image = BitMapToString(bitmapPlant);
@@ -230,7 +231,6 @@ public class AddPlant extends AppCompatActivity {
             tempPlant.setImage(image);
         }
         tempPlant.setName(name.getText().toString());
-        tempPlant.setSoilPH(fert.getText().toString());
         tempPlant.setSpacing(potDiam.getText().toString());
         Log.d("Spinner Position", String.valueOf(water.getSelectedItemPosition()));
         tempPlant.setWaterReq(String.valueOf(water.getSelectedItemPosition()));

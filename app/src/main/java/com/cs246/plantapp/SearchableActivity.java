@@ -43,6 +43,7 @@ public class SearchableActivity extends AppCompatActivity {
                 String json = gson.toJson(plant);
                 i.putExtra("searchPlant", json);
                 startActivity(i);
+                finish();
                 Log.d("Selected Plant: ", plant.toString());
             }
         });

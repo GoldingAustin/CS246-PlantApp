@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cs246.plantapp">
-
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -43,11 +44,6 @@
                 android:value=".SearchableActivity" />
             </activity>
         <activity
-            android:name=".CreateAccount"
-            android:label="@string/title_activity_create_account"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask"/>
-        <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask">
@@ -57,16 +53,10 @@
             android:label="@string/title_activity_settings"
             android:launchMode="singleTask"/>
         <activity
-            android:name=".PlantsList"
-            android:label="@string/title_activity_plants_app"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask"></activity>
-        <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

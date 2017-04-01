@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("tempPlant", json);
                 editor.commit();
                 startActivity(i);
+                finish();
                 Log.d("Selected Plant: ", plant.toString());
             }
         });

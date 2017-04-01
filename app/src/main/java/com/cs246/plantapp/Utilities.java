@@ -31,7 +31,7 @@ class Utilities  {
         int h = bitmap.getHeight();
         byte[] ycc = getNV21(w, h, bitmap);
         YuvImage yuvImage = new YuvImage(ycc, ImageFormat.NV21, w, h, null);
-        yuvImage.compressToJpeg(new Rect(0, 0, w, h), 50, baos);
+        yuvImage.compressToJpeg(new Rect(0, 0, w, h), 25, baos);
         byte[] b = baos.toByteArray();
         return Base64.encodeToString(b, Base64.DEFAULT);
     }

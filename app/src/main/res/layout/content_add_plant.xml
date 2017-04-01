@@ -86,33 +86,12 @@
             android:id="@+id/selectWaterNeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textViewFertilizer"
+            android:layout_above="@+id/linearLayoutAddLabel"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="15dp"
             android:entries="@array/water_array"
             android:dropDownWidth="match_parent" />
-
-        <TextView
-            android:id="@+id/textViewFertilizer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editFertalizer"
-            android:layout_centerHorizontal="true"
-            android:text="@string/fertilizer_ph_levels"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-    <EditText
-        android:id="@+id/editFertalizer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayoutAddLabel"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="11dp"
-        android:ems="10"
-        android:inputType="numberSigned" />
 
 
         <LinearLayout
