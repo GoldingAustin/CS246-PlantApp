@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ListView view = (ListView) findViewById(R.id.listPlantsView);
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-        {
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 setNotifications();
@@ -184,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Gets plants.
      */
-    private void getPlants()  {
+    private void getPlants() {
         SharedPreferences prefsSettings = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         PlantsListAdapter plantsListAdapter;
         if (prefsSettings.contains("Measure") && prefsSettings.getString("Measure", "").equals("Imperial")) {
@@ -224,27 +223,30 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setNotifications() {
         SharedPreferences prefs = this.getSharedPreferences("Settings", MODE_PRIVATE);
-        if (prefs.contains("Notifications")) {
-            if (prefs.getString("Notifications", "").equals("true")) {
-                ListView view = (ListView) findViewById(R.id.listPlantsView);
-                int position = 0;
-                for (PlantsObject plantsObject : plants) {
-                    TextView water = (TextView) view.getChildAt(position).findViewById(R.id.plants_list_water);
-                    Log.d("Retrieved Water ", water.getText().toString());
-                    for (int i = 0; i < plantsObject.getCheckDays().size(); i++) {
-                        if (plantsObject.getCheckDays().get("Day " + String.valueOf(i))) {
-                            Intent intent = new Intent(MainActivity.this, AlertReceiver.class);
-                            Notification.Builder builder = new Notification.Builder(this);
-                            builder.setContentTitle(plantsObject.getName() + " needs to be watered today");
-                            builder.setContentText("This plant needs " + water.getText().toString());
-                            builder.setSmallIcon(R.mipmap.ic_launcher);
-                            intent.putExtra(AlertReceiver.NOTIFICATION_ID, 1);
-                            intent.putExtra(AlertReceiver.NOTIFICATION, builder.build());
-                            scheduleAlarm(i + 1, intent);
-                        }
+        if (!prefs.contains("Notifications")) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("Notifications", "true");
+            editor.commit();
+        }
+        if (prefs.getString("Notifications", "").equals("true")) {
+            ListView view = (ListView) findViewById(R.id.listPlantsView);
+            int position = 0;
+            for (PlantsObject plantsObject : plants) {
+                TextView water = (TextView) view.getChildAt(position).findViewById(R.id.plants_list_water);
+                Log.d("Retrieved Water ", water.getText().toString());
+                for (int i = 0; i < plantsObject.getCheckDays().size(); i++) {
+                    if (plantsObject.getCheckDays().get("Day " + String.valueOf(i))) {
+                        Intent intent = new Intent(MainActivity.this, AlertReceiver.class);
+                        Notification.Builder builder = new Notification.Builder(this);
+                        builder.setContentTitle(plantsObject.getName() + " needs to be watered today");
+                        builder.setContentText("This plant needs " + water.getText().toString());
+                        builder.setSmallIcon(R.mipmap.ic_launcher);
+                        intent.putExtra(AlertReceiver.NOTIFICATION_ID, 1);
+                        intent.putExtra(AlertReceiver.NOTIFICATION, builder.build());
+                        scheduleAlarm(i + 1, intent);
                     }
-                    position++;
                 }
+                position++;
             }
         }
     }
