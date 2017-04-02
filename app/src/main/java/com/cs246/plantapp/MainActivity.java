@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                             Notification.Builder builder = new Notification.Builder(this);
                             builder.setContentTitle(plantsObject.getName() + " needs to be watered today");
                             builder.setContentText("This plant needs " + water.getText().toString());
-                            builder.setSmallIcon(R.drawable.ic_stat_notify);
+                            builder.setSmallIcon(R.mipmap.ic_launcher);
                             intent.putExtra(AlertReceiver.NOTIFICATION_ID, 1);
                             intent.putExtra(AlertReceiver.NOTIFICATION, builder.build());
                             scheduleAlarm(i + 1, intent);
