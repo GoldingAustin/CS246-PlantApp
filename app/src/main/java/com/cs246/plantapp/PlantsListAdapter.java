@@ -81,7 +81,7 @@ class PlantsListAdapter extends ArrayAdapter<PlantsObject> {
         } else {
             waterPerDay = Double.valueOf(tempWater.first);
         }
-        water.setText(String.valueOf(waterPerDay.intValue()) + " " + tempWater.second + " per day");
+        water.setText(String.format("%.2f", waterPerDay) + " " + tempWater.second + " per day");
         TextView diameter = (TextView) convertView.findViewById(R.id.plants_list_diameter);
         diameter.setText(plantsObject.getSpacing());
 
